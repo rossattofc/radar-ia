@@ -3,50 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RADAR IA | Soluções de Inteligência Artificial</title>
+    <title>Radar de IA - Sicredi</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
     <style>
-        /* Estilos originais do RECIP */
+        /* Estilos originais do RECIP (Preservados) */
         body { font-family: 'Inter', sans-serif; }
         .sidebar-fixed {
             position: sticky;
-            top: 4rem;
-            height: calc(100vh - 4rem);
-            overflow-y: auto;
+            top: 4rem; 
+            height: calc(100vh - 4rem); 
+            overflow-y: auto; 
         }
         .modal { transition: opacity 0.3s ease-in-out; }
 
-        /* HEADER E SIDEBAR */
-        .fixed-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: #3FA110; 
-            padding: 12px 24px;
-            z-index: 100;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-        }
-        .header-inner-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between; 
-            max-width: 1100px;
-            margin: auto;
-        }
-        .header-title {
-            color: #fff;
-            font-size: 1.4rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
-        .header-logo-container { display: flex; align-items: center; gap: 12px; }
-        .header-logo { height: 32px; }
-        #main-content { padding-top: 4rem; }
-        .content-container { padding: 24px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); width: 100%; max-width: 7xl; margin: 0 auto; }
-        
-        /* ESTILO DO RADAR SEMICIRCULAR */
         .explanation-section {
             max-width: 900px;
             width: 95%;
@@ -58,104 +28,142 @@
             font-size: 0.95rem;
             line-height: 1.5;
             color: #4b5563;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
             margin: 0 auto;
         }
-        .explanation-section strong { color: #3FA110; font-weight: 700; }
-        .explanation-list { margin-top: 10px; padding-left: 20px; }
-        .explanation-list li { margin-bottom: 5px; }
-        .content-filter-section {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 18px;
-            margin: 32px auto 0 auto;
-            max-width: 900px;
+        .explanation-section strong {
+            color: #3FA110;
+            font-weight: 700;
         }
+        .explanation-list {
+            margin-top: 10px;
+            padding-left: 20px;
+        }
+        .explanation-list li {
+            margin-bottom: 5px;
+        }
+
+        /* Botões de filtro originais */
+        .content-filter-section { margin: 32px auto 0 auto; max-width: 900px; }
         .content-item {
-            background: #f0f0f0; color: #212121; font-size: 1.1rem;
-            font-weight: 500; border-radius: 16px; padding: 10px 28px;
-            cursor: pointer; transition: background 0.2s, color 0.2s;
-            border: none; margin-bottom: 8px;
+            background: #f0f0f0;
+            color: #212121;
+            font-size: 1.1rem;
+            font-weight: 500;
+            border-radius: 16px;
+            padding: 10px 28px;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+            border: none;
+            margin-bottom: 8px;
         }
-        .content-item.active, .content-item:hover { background: #3FA110; color: #ffffff; }
-
-        .radar-container { position: relative; width: 600px; max-width: 95vw; margin: 0 auto 32px auto; }
-        .radar-svg { width: 100%; height: auto; display: block; }
-        
-        /* CARD DE DETALHES */
-        .selected-card-container { width: 100%; display: flex; justify-content: center; margin-top: 16px; margin-bottom: 32px; }
-        .selected-card {
-            background: #ffffff; border: 1px solid #3FA110; border-radius: 22px;
-            padding: 28px 36px; min-width: 320px; max-width: 800px; width: 95%;
-            box-shadow: 0 4px 16px rgba(63, 161, 16, 0.25); display: flex;
-            flex-direction: column; gap: 12px; border-left: 10px solid #3FA110;
-            font-size: 1.1rem; animation: fadeIn 0.3s;
-        }
-        .card-maturity { font-weight: 600; color: #3FA110; margin-top: 8px; padding-top: 8px; border-top: 1px solid #e0e0e0; }
-
-        /* TOOLTIP */
-        .tooltip {
-            position: fixed; background: #3FA110; color: #fff; padding: 8px 14px; 
-            border-radius: 12px; font-size: 1rem; pointer-events: none; z-index: 10;
-            box-shadow: 0 4px 24px rgba(63, 161, 16, 0.4); display: none;
-            max-width: 250px; word-break: break-word;
+        .content-item.active,
+        .content-item:hover {
+            background: #3FA110;
+            color: #ffffff;
         }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px);} to { opacity: 1; transform: translateY(0);} }
-
-        /* CLASSE DE CONTEÚDO: Garante que o JS controle o display */
-        .page-content-section {
-            background-color: white; 
-            padding: 24px; 
-            border-radius: 8px; 
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        .radar-container {
+            position: relative;
+            margin: 0 auto 32px auto;
+        }
+        .radar-svg {
             width: 100%;
-            max-width: 7xl;
-            margin: 0 auto;
+            height: auto;
+            display: block;
+        }
+
+        /* Card de Detalhes (Estilos Base originais) */
+        .selected-card-container {
+            width: 100%; 
+            display: flex;
+            justify-content: center;
+            margin-top: 16px;
+            margin-bottom: 32px;
+        }
+        .selected-card {
+            background: #ffffff;
+            border-radius: 22px;
+            padding: 28px 36px;
+            min-width: 320px;
+            max-width: 800px;
+            width: 95%; 
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            font-size: 1.1rem;
+            animation: fadeIn 0.3s;
+        }
+        .card-maturity {
+            font-weight: 600;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid #e0e0e0;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+
+        /* Tooltip original */
+        .tooltip {
+            position: fixed;
+            background: #3FA110; 
+            color: #fff;
+            padding: 8px 14px;
+            border-radius: 12px;
+            font-size: 1rem;
+            pointer-events: none;
+            z-index: 10;
+            box-shadow: 0 4px 24px rgba(63, 161, 16, 0.4);
+            display: none;
+            max-width: 250px;
+            word-break: break-word;
         }
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
 
-    <header class="fixed-header">
-        <div class="header-inner-container">
-            <h1 class="header-title">
-                RADAR IA | Soluções de Inteligência Artificial
-            </h1>
-            <div class="header-logo-container">
-                <img src="img/inovacao-logo.png" alt="Logo Inovação" class="header-logo">
-                <img src="img/sicredi-logo.png" alt="Logo Sicredi" class="header-logo">
-            </div>
+    <header class="fixed top-0 left-0 right-0 h-16 bg-[#3FA110] shadow-md z-50 flex items-center justify-between px-4 lg:px-8">
+        <div class="flex items-center space-x-4">
+            <button id="menu-toggle" class="lg:hidden p-2 text-white hover:bg-[#327a0d] rounded-md">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+            <h1 class="text-xl lg:text-2xl font-bold text-white tracking-wider">RADAR IA | Ecossistema de Inteligência Artificial</h1>
+        </div>
+        <div class="flex items-center space-x-4">
+            <img src="img/sicredi-logo.png" alt="Logo Sicredi" class="h-8 hidden sm:block">
+            <img src="img/inovacao-logo.png" alt="Logo Inovação" class="h-8 hidden md:block">
         </div>
     </header>
 
-    <main class="flex">
+    <main class="pt-16 flex">
 
         <nav id="sidebar" class="fixed top-16 left-0 w-64 bg-white shadow-xl h-[calc(100vh-4rem)] overflow-y-auto z-40 lg:block hidden">
             <div class="p-4 space-y-2">
-                <a href="#intro-ia" data-content-id="intro-ia" class="menu-item block px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition duration-150 ease-in-out" aria-current="true">
-                    <span class="font-bold text-[#3FA110]">⚫</span> Introdução à IA
+                <a href="#intro" data-content-id="intro" class="menu-item block px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition duration-150 ease-in-out" aria-current="true">
+                    <span class="font-bold text-[#3FA110]">⚫</span> Introdução
                 </a>
                 
-                <h3 class="px-4 pt-4 text-xs font-semibold uppercase text-gray-400">Categorias de Solução</h3>
-                <a href="#categoria-eficiencia" data-content-id="categoria-eficiencia" class="menu-item block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg">
-                    <span class="font-bold text-[#3FA110]">1.</span> Eficiência Operacional
+                <h3 class="px-4 pt-4 text-xs font-semibold uppercase text-gray-400">Dimensões de IA</h3>
+                <a href="#dimensao-dados" data-content-id="dimensao-dados" class="menu-item block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg">
+                    <span class="font-bold text-[#3FA110]">1.</span> Dados e Decisão
                 </a>
-                <a href="#categoria-suporte" data-content-id="categoria-suporte" class="menu-item block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg">
-                    <span class="font-bold text-[#3FA110]">2.</span> Suporte e Experiência
+                <a href="#dimensao-eficiencia" data-content-id="dimensao-eficiencia" class="menu-item block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg">
+                    <span class="font-bold text-[#3FA110]">2.</span> Eficiência Operacional
                 </a>
-                <a href="#categoria-risco" data-content-id="categoria-risco" class="menu-item block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg">
-                    <span class="font-bold text-[#3FA110]">3.</span> Risco e Crédito
+                <a href="#dimensao-experiencia" data-content-id="dimensao-experiencia" class="menu-item block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg">
+                    <span class="font-bold text-[#3FA110]">3.</span> Experiência do Cliente
                 </a>
-                <a href="#categoria-insights" data-content-id="categoria-insights" class="menu-item block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg">
-                    <span class="font-bold text-[#3FA110]">4.</span> Insights e Previsão
+                <a href="#dimensao-conhecimento" data-content-id="dimensao-conhecimento" class="menu-item block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg">
+                    <span class="font-bold text-[#3FA110]">4.</span> Gestão do Conhecimento
                 </a>
-                <a href="#categoria-talentos" data-content-id="categoria-talentos" class="menu-item block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg">
-                    <span class="font-bold text-[#3FA110]">5.</span> Gestão de Talentos
+                <a href="#dimensao-criatividade" data-content-id="dimensao-criatividade" class="menu-item block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg">
+                    <span class="font-bold text-[#3FA110]">5.</span> Criatividade & Design
                 </a>
 
                 <h3 class="px-4 pt-4 text-xs font-semibold uppercase text-gray-400">Visão Geral</h3>
-                <a href="#radar-ia" data-content-id="radar-ia" class="menu-item block px-4 py-2 text-sm font-bold bg-[#3FA110] text-white rounded-lg transition duration-150 ease-in-out">
+                <a href="#radar" data-content-id="radar" class="menu-item block px-4 py-2 text-sm font-bold bg-[#3FA110] text-white rounded-lg transition duration-150 ease-in-out">
                     <svg class="w-4 h-4 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                     Radar de Soluções
                 </a>
@@ -164,82 +172,89 @@
 
         <section id="main-content" class="flex-grow p-4 lg:p-8 lg:ml-64">
             
-            <div id="content-intro-ia" class="page-content-section hidden">
-                <h2 class="text-3xl font-bold text-gray-800 mb-4">A Inteligência Artificial no Sistema Cooperativo</h2>
+            <div id="content-intro" class="content-section bg-white p-6 rounded-lg shadow-xl w-full max-w-7xl mx-auto">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Radar de Adoção de IA</h2>
                 <div class="text-gray-700 space-y-4">
-                    <p>A Inteligência Artificial é um vetor estratégico para impulsionar a eficiência e a experiência do associado. Nosso ecossistema de soluções de IA abrange desde plataformas *core* até ferramentas generativas para uso diário dos colaboradores.</p>
-                    <p>Este radar categoriza as soluções de IA que estamos utilizando e desenvolvendo, garantindo que o investimento tecnológico esteja alinhado com os <strong>Desafios de Negócio</strong> mais críticos da cooperativa:</p>
+                    <p>Bem-vindo ao radar interativo de Inteligência Artificial. Esta ferramenta mapeia as iniciativas e ferramentas de IA dentro do nosso ecossistema, categorizadas para facilitar a visualização de maturidade e propósito.</p>
+                    <p>Nossas inovações são categorizadas em cinco dimensões estratégicas:</p>
                     <ul class="list-disc list-inside ml-4 space-y-2">
-                        <li><strong>Eficiência Operacional:</strong> Soluções para automatizar tarefas repetitivas e otimizar processos internos.</li>
-                        <li><strong>Suporte e Experiência:</strong> Aplicações focadas em melhorar o atendimento e a interação com associados e colaboradores.</li>
-                        <li><strong>Risco e Crédito:</strong> Modelos preditivos para tomada de decisão mais segura e otimizada no ciclo financeiro.</li>
-                        <li><strong>Insights e Previsão:</strong> Capacidades para gerar inteligência de mercado e análises preditivas complexas.</li>
-                        <li><strong>Gestão de Talentos:</strong> Uso de IA para otimizar processos de recrutamento e desenvolvimento interno.</li>
+                        <li><strong>Dados e Decisão:</strong> Análise preditiva, crédito, risco e inteligência de mercado.</li>
+                        <li><strong>Eficiência Operacional:</strong> Automação de processos (RPA), recrutamento e produtividade.</li>
+                        <li><strong>Experiência do Cliente:</strong> Chatbots, assistentes virtuais e atendimento.</li>
+                        <li><strong>Gestão do Conhecimento:</strong> Busca inteligente, RAG e organização da informação.</li>
+                        <li><strong>Criatividade & Design:</strong> Geração de imagens, marketing e ativos visuais.</li>
                     </ul>
-                    <p>Navegue pelas categorias e utilize o Radar para visualizar a maturidade e a distribuição das nossas ferramentas de IA.</p>
                 </div>
             </div>
 
-            <div id="content-categoria-eficiencia" class="page-content-section hidden">
-                <h2 class="text-3xl font-bold text-gray-800 mb-4">Categoria 1: Eficiência Operacional</h2>
+            <div id="content-dimensao-dados" class="content-section bg-white p-6 rounded-lg shadow-xl w-full max-w-7xl mx-auto hidden">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Dimensão 1: Dados e Decisão</h2>
                 <div class="text-gray-700 space-y-4">
-                    <p>Foco na automação de processos de *back-office* e na otimização de fluxos de trabalho que consomem tempo manual. Soluções como <strong>Copilot 365</strong> e <strong>Power Automate</strong> permitem que os colaboradores dediquem mais tempo a atividades estratégicas, eliminando a repetição e o retrabalho em sistemas legados. A IA atua aqui como uma camada de aceleração e desburocratização.</p>
+                    <p>Esta dimensão foca no uso de modelos matemáticos e estatísticos avançados para suportar a tomada de decisão estratégica.</p>
+                    <p>Inclui iniciativas de <strong>Crédito e Risco</strong>, <strong>Análise Preditiva</strong> e <strong>Recuperação de Crédito</strong>. O objetivo é utilizar dados históricos e em tempo real para prever cenários, mitigar riscos e personalizar ofertas.</p>
                 </div>
             </div>
-            <div id="content-categoria-suporte" class="page-content-section hidden">
-                <h2 class="text-3xl font-bold text-gray-800 mb-4">Categoria 2: Suporte e Experiência</h2>
+            
+            <div id="content-dimensao-eficiencia" class="content-section bg-white p-6 rounded-lg shadow-xl w-full max-w-7xl mx-auto hidden">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Dimensão 2: Eficiência Operacional</h2>
                 <div class="text-gray-700 space-y-4">
-                    <p>Esta categoria abrange todas as soluções de IA que aprimoram a interação, seja com o associado (atendimento e canais digitais) ou internamente (suporte ao colaborador). Soluções como <strong>TheoGPT</strong> e <strong>Copilot Chat</strong> garantem respostas imediatas, precisas e contextualizadas, transformando dados complexos em diálogos simples. O objetivo é reduzir o tempo de espera e elevar a qualidade da experiência do usuário.</p>
+                    <p>Focada em otimizar processos internos, reduzindo o trabalho manual e repetitivo.</p>
+                    <p>Abrange <strong>Automação de Processos</strong> e <strong>Recrutamento e Seleção</strong>. Ferramentas como RPA e triagem automática de currículos se encaixam aqui, liberando as equipes para atividades de maior valor agregado.</p>
                 </div>
             </div>
-            <div id="content-categoria-risco" class="page-content-section hidden">
-                <h2 class="text-3xl font-bold text-gray-800 mb-4">Categoria 3: Risco e Crédito</h2>
+            
+            <div id="content-dimensao-experiencia" class="content-section bg-white p-6 rounded-lg shadow-xl w-full max-w-7xl mx-auto hidden">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Dimensão 3: Experiência do Cliente</h2>
                 <div class="text-gray-700 space-y-4">
-                    <p>Aqui, a IA é aplicada para tomar decisões financeiras mais inteligentes e menos enviesadas. Modelos como o <strong>Modelo Biribinha</strong> (Analista de Crédito Virtual) automatizam a análise de risco, permitindo a concessão de crédito de forma instantânea em casos de baixo risco. A IA é vital para o ciclo de recuperação de crédito e para otimizar os limites oferecidos, aumentando a rentabilidade e controlando a inadimplência.</p>
+                    <p>Uso de IA para interagir diretamente com o associado ou colaborador, melhorando a satisfação e agilidade.</p>
+                    <p>O foco principal é <strong>Atendimento ao Cliente</strong> através de assistentes virtuais, chatbots inteligentes e análise de sentimento.</p>
                 </div>
             </div>
-            <div id="content-categoria-insights" class="page-content-section hidden">
-                <h2 class="text-3xl font-bold text-gray-800 mb-4">Categoria 4: Insights e Previsão</h2>
+            
+            <div id="content-dimensao-conhecimento" class="content-section bg-white p-6 rounded-lg shadow-xl w-full max-w-7xl mx-auto hidden">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Dimensão 4: Gestão do Conhecimento</h2>
                 <div class="text-gray-700 space-y-4">
-                    <p>Esta área foca em transformar grandes volumes de dados (Big Data) em inteligência acionável. Utilizando plataformas como <strong>Databricks</strong> e modelos de propensão, a cooperativa consegue antecipar tendências, prever o comportamento do mercado e identificar o momento ideal para oferecer produtos específicos (como consórcios). A IA aqui é o motor da inteligência de mercado e da estratégia de crescimento.</p>
+                    <p>Como armazenamos, buscamos e geramos informação interna.</p>
+                    <p>Projetos de <strong>Busca e Geração de Informações</strong>, como sistemas RAG (Retrieval Augmented Generation) que permitem "conversar" com bases de documentos internos.</p>
                 </div>
             </div>
-            <div id="content-categoria-talentos" class="page-content-section hidden">
-                <h2 class="text-3xl font-bold text-gray-800 mb-4">Categoria 5: Gestão de Talentos</h2>
+            
+            <div id="content-dimensao-criatividade" class="content-section bg-white p-6 rounded-lg shadow-xl w-full max-w-7xl mx-auto hidden">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Dimensão 5: Criatividade & Design</h2>
                 <div class="text-gray-700 space-y-4">
-                    <p>A aplicação de IA para otimizar o capital humano, desde o recrutamento até o desenvolvimento. Soluções como a <strong>IA integrada ao Gupy</strong> automatizam a triagem de currículos, garantindo que o processo de aquisição de talentos seja mais rápido, justo e focado em competências específicas. Isso libera os times de RH para se dedicarem à atração e retenção estratégica dos melhores profissionais.</p>
+                    <p>Exploração de IA Generativa para produção de conteúdo visual.</p>
+                    <p>Ferramentas de <strong>Criação Visual</strong> que auxiliam o marketing e comunicação na geração de imagens, vídeos e layouts.</p>
                 </div>
             </div>
 
-            <div id="content-radar-ia" class="page-content-section hidden flex-col items-center">
+            <div id="content-radar" class="content-section bg-white p-6 rounded-lg shadow-xl w-full max-w-7xl mx-auto hidden flex-col items-center">
                 <div class="w-full text-center mb-8">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-2">Radar de Soluções de IA</h2>
-                    <p class="text-lg text-gray-600">Visualização por Desafios Resolvidos e Maturidade de Uso</p>
+                    <h2 class="text-3xl font-bold text-gray-800 mb-2">Análise de Ferramentas IA</h2>
+                    <p class="text-lg text-gray-600">Visualização por Dimensões de Uso</p>
                 </div>
 
                 <div class="explanation-section w-full">
                     <p>
-                        O <strong>Radar de Soluções de IA</strong> é uma ferramenta de visualização para mapear e categorizar as iniciativas de Inteligência Artificial da cooperativa. O gráfico é dividido em setores radiais (as categorias de Desafios Resolvidos) e camadas concêntricas (a maturidade da solução). 
+                        O <strong>Radar de IA</strong> mapeia as ferramentas conforme sua maturidade.
                     </p>
                     <p><strong>Interpretação da Posição dos Pontos:</strong></p>
                     <ul class="explanation-list">
-                        <li><strong>Eixos Radiais (Setores):</strong> Indicam a <strong>Categoria Consolidada</strong> (Desafio Resolvido) da solução (ex: Risco e Crédito, Eficiência Operacional).</li>
+                        <li><strong>Eixos Radiais:</strong> Indicam a categoria da solução.</li>
                         <li style="font-weight: bold;">
-                            — Linha mais Externa (R=250): Solução em <strong>Prospecção</strong> (Estudo de Viabilidade/Ideação).
+                            — Linha mais Externa: Prospecção / Estudo.
                         </li>
                         <li style="font-weight: bold;">
-                            — Linha do Meio (R=200): Solução em <strong>Desenvolvimento</strong> (MVP, Piloto, Implementação Inicial).
+                            — Linha do Meio: Desenvolvimento / Piloto / MVP.
                         </li>
                         <li style="font-weight: bold;">
-                            — Linha mais Interna (R=150): Solução em <strong>Uso Pleno</strong> (Produção, Adoção Ampliada, Otimização Contínua).
+                            — Linha mais Interna: Uso Pleno / Produção.
                         </li>
                     </ul>
-                    <p>Passe o mouse sobre o ponto para ver o nome e clique para ver a descrição detalhada e a Maturidade de Uso.</p>
                 </div>
 
                 <div class="content-filter-section w-full flex flex-wrap justify-center gap-4 mb-8" id="filterSection">
                     </div>
-                
+
                 <div class="radar-container mx-auto" style="width: 600px; max-width: 95vw;">
                     <svg class="radar-svg" id="radarSVG" viewBox="0 0 700 400">
                         <path d="M100,350 A250,250 0 0,1 600,350" stroke="#3FA110" stroke-width="1.5" fill="none" opacity="0.6"/>
@@ -255,17 +270,16 @@
                     </svg>
                     <div class="tooltip" id="tooltip"></div>
                 </div>
-                
-                <div class="selected-card-container w-full" id="selectedCardContainer"></div>
 
+                <div class="selected-card-container w-full" id="selectedCardContainer"></div>
             </div>
         </section>
     </main>
 
-    <div id="project-modal" class="modal fixed inset-0 bg-gray-900 bg-opacity-75 z-[60] flex items-center justify-center hidden" aria-modal="true" role="dialog" aria-labelledby="modal-title">
-        <div class="bg-white rounded-lg p-6 w-11/12 md:w-1/2 max-w-lg shadow-2xl relative" role="document">
+    <div id="project-modal" class="modal fixed inset-0 bg-gray-900 bg-opacity-75 z-[60] flex items-center justify-center hidden">
+        <div class="bg-white rounded-lg p-6 w-11/12 md:w-1/2 max-w-lg shadow-2xl relative">
             <button id="close-modal" class="absolute top-3 right-3 text-gray-500 hover:text-gray-800 transition">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
             <h3 id="modal-title" class="text-2xl font-bold text-gray-800 mb-2"></h3>
             <p id="modal-dimension" class="text-md font-medium text-[#3FA110] mb-4"></p>
@@ -274,308 +288,121 @@
         </div>
     </div>
 
-
     <script>
-        // ====================================================================
-        // FUNÇÕES E DADOS DO RADAR DE IA (INJETADOS)
-        // ====================================================================
-
-        // Mapeamento das categorias antigas para as novas (CONSOLIDAÇÃO)
-        const categoryMap = {
-            "Automação de processos": "Eficiência Operacional",
-            "Otimização de operações": "Eficiência Operacional",
-            "Criação visual": "Eficiência Operacional",
-            "Atendimento ao cliente": "Suporte e Experiência",
-            "Busca e geração de informações": "Suporte e Experiência",
-            "Crédito e risco": "Risco e Crédito",
-            "Recuperação de crédito": "Risco e Crédito",
-            "Análise preditiva": "Insights e Previsão",
-            "Inteligência de mercado": "Insights e Previsão",
-            "Recrutamento e seleção": "Gestão de Talentos"
-        };
-
-        // Dados reestruturados, mapeados e com MATURIDADE DE USO
-        const originalRadarData = [
-            {
-                nome: "Databricks", 
-                desafio: "Análise preditiva", 
-                descricao: "Plataforma unificada para dados, análises e IA. Permite engenheiros de dados, cientistas de dados e analistas colaborarem em grande escala, utilizando a arquitetura Lakehouse. É essencial para construir pipelines de Machine Learning (ML) robustos e treinar modelos preditivos em grandes volumes de dados (Big Data).",
-                maturidade: "Em Uso (Plataforma Core)"
-            },
-            {
-                nome: "API GPT (OpenAI)", 
-                desafio: "Automação de processos", 
-                descricao: "Integra o poder dos grandes modelos de linguagem (LLMs) como GPT-4 a sistemas e fluxos de trabalho internos. Permite a criação de funcionalidades personalizadas, como geração automatizada de textos, sumários complexos de documentos, classificação de dados e automatização de tarefas intelectuais repetitivas.",
-                maturidade: "Em Uso (Projetos Piloto e Integração)"
-            },
-            {
-                nome: "GitHub Copilot", 
-                desafio: "Automação de processos", 
-                descricao: "Assistente de codificação de IA que utiliza um modelo de linguagem treinado em vastos repositórios de código. Sugere linhas inteiras ou funções completas em tempo real, acelera o desenvolvimento de software, reduz a repetição de código (boilerplate) e auxilia na geração de documentação básica, aumentando a produtividade dos desenvolvedores.",
-                maturidade: "Em Uso (Adoção por Desenvolvedores)"
-            },
-            {
-                nome: "Copilot Studio", 
-                desafio: "Atendimento ao cliente", 
-                descricao: "Ferramenta low-code que permite criar e personalizar copilotos e chatbots corporativos avançados. Facilita a integração de modelos de IA generativa (como GPT) com fontes de dados internas, possibilitando a criação de agentes inteligentes especializados para interações complexas com clientes e colaboradores, desde suporte técnico até consultas específicas de negócio.",
-                maturidade: "Em Desenvolvimento (Criação de Agentes)"
-            },
-            {
-                nome: "TheoGPT", 
-                desafio: "Atendimento ao cliente", 
-                descricao: "Assistente virtual conversacional personalizado, baseado em plataformas robustas como Azure/OpenAI. Seu foco é o uso interno por colaboradores, fornecendo respostas rápidas e contextualizadas sobre políticas, procedimentos, dados e informações estratégicas da empresa (Sicredi), agilizando a tomada de decisão e a operação diária.",
-                maturidade: "Em Uso (Adoção Interna)"
-            },
-            {
-                nome: "Perplexity.AI", 
-                desafio: "Busca e geração de informações", 
-                descricao: "Plataforma de busca e resposta que utiliza IA generativa para fornecer resumos de informações e respostas diretas, citando as fontes primárias. Diferente de buscas tradicionais, sintetiza conhecimento e resolve consultas complexas, sendo uma ferramenta poderosa para pesquisa, geração de insights e elaboração de relatórios concisos.",
-                maturidade: "Em Prospecção (Estudo de Caso)"
-            },
-            {
-                nome: "Vitrine de Modelos", 
-                desafio: "Análise preditiva", 
-                descricao: "Repositório centralizado para compartilhamento e catálogo de modelos de Machine Learning (ML) que já foram validados e homologados. Seu objetivo é promover a reutilização, evitar a duplicidade de esforços e acelerar a implementação de novos projetos de IA preditiva entre as diferentes unidades de negócio (CAS, Centrais e Cooperativas).",
-                maturidade: "Em Uso (Plataforma Core)"
-            },
-            {
-                nome: "Copilot Chat", 
-                desafio: "Atendimento ao cliente", 
-                descricao: "Interface de chat conversacional integrada ao ecossistema de produtividade, permitindo aos usuários interagir com a IA para uma variedade de tarefas. É usado para fazer perguntas rápidas, gerar rascunhos de textos, resumir reuniões, criar imagens ou gráficos conceituais e analisar documentos de forma inteligente e contextualizada.",
-                maturidade: "Em Uso (Disponível para Colaboradores)"
-            },
-            {
-                nome: "Copilot 365", 
-                desafio: "Automação de processos", 
-                descricao: "Assistente de IA generativa integrado diretamente aos aplicativos do Microsoft 365 (Word, Excel, PowerPoint, Outlook, Teams). Automatiza tarefas de rotina, como rascunhar e-mails, resumir longas cadeias de conversas, criar apresentações a partir de documentos e analisar dados em planilhas para gerar insights automáticos.",
-                maturidade: "Em Uso (Disponível para Colaboradores)"
-            },
-            {
-                nome: "Teams Premium", 
-                desafio: "Atendimento ao cliente", 
-                descricao: "Melhora a experiência de reuniões virtuais através de recursos avançados de IA. Inclui resumos inteligentes de reuniões (indicando quem disse o quê e tópicos abordados), tradução simultânea em tempo real e capítulos de gravação gerados automaticamente, otimizando o tempo e a acessibilidade da informação após os encontros.",
-                maturidade: "Em Uso (Adoção em Reuniões)"
-            },
-            {
-                nome: "API do OCR", 
-                desafio: "Automação de processos", 
-                descricao: "Serviço de Reconhecimento Óptico de Caracteres que utiliza IA para extrair texto de imagens, PDFs e documentos digitalizados. É crucial para digitalizar e processar automaticamente grandes volumes de documentos, transformando dados não estruturados (como recibos ou formulários escaneados) em dados estruturados (texto digital) para sistemas de back-office.",
-                maturidade: "Em Uso (Processamento de Documentos)"
-            },
-            {
-                nome: "IA GEN na Base de Conhecimento", 
-                desafio: "Busca e geração de informações", 
-                descricao: "Aplicação de IA generativa (RAG) em um repositório interno de documentos. Permite que a IA 'leia' e compreenda a base de conhecimento, elaborando resumos precisos, indexando textos automaticamente e respondendo a perguntas complexas baseadas apenas nos documentos corporativos, garantindo a fidelidade e segurança da informação.",
-                maturidade: "Em Desenvolvimento (MVP Interno)"
-            },
-            {
-                nome: "Portal Rag", 
-                desafio: "Busca e geração de informações", 
-                descricao: "Plataforma que utiliza a arquitetura Retrieval Augmented Generation (RAG) e IA generativa. Seu objetivo é acelerar o desenvolvimento local de soluções de IA, fornecendo uma base tecnológica e um ambiente para que equipes internas criem rapidamente novas aplicações de busca e resposta contextualizadas com dados privados.",
-                maturidade: "Em Desenvolvimento (Plataforma Base)"
-            },
-            {
-                nome: "Fala Diana", 
-                desafio: "Atendimento ao cliente", 
-                descricao: "Plataforma conversacional que integra IA com sistemas de dados como o Hyperion. Permite que os usuários (colaboradores) façam consultas em linguagem natural (ex: 'Qual foi o resultado financeiro do último mês?') e obtenham dados e relatórios de forma ágil, eliminando a necessidade de navegação complexa em dashboards e sistemas.",
-                maturidade: "Em Uso (Adoção Interna)"
-            },
-            {
-                nome: "IA integrada ao Gupy", 
-                desafio: "Recrutamento e seleção", 
-                descricao: "Integração de modelos de IA à plataforma de recrutamento para otimizar e automatizar diversas etapas do processo de aquisição de talentos (Talent Acquisition). Isso inclui triagem inicial de currículos, ranqueamento de candidatos, identificação de soft skills e até mesmo sugestões para agendamento de entrevistas, garantindo mais eficiência e justiça no processo.",
-                maturidade: "Em Uso (Triagem Automática)"
-            },
-            {
-                nome: "Power Automate", 
-                desafio: "Automação de processos", 
-                descricao: "Ferramenta de Automação de Processos Robóticos (RPA) que permite criar fluxos de trabalho automatizados entre diferentes aplicativos e serviços. Agora, com a integração de Copilot e OpenAI, pode automatizar tarefas que envolvem tomada de decisão e processamento de linguagem, indo além da repetição de cliques e teclados.",
-                maturidade: "Em Uso (Fluxos de Trabalho e RPA)"
-            },
-            {
-                nome: "Canva IA", 
-                desafio: "Criação visual", 
-                descricao: "Conjunto de ferramentas de IA para design gráfico e criação visual. Permite gerar imagens a partir de prompts de texto (text-to-image), gerar textos de apoio para designs, criar apresentações automaticamente e remover fundos complexos, democratizando o design e acelerando a criação de materiais de comunicação e marketing.",
-                maturidade: "Em Uso (Adoção por Marketing)"
-            },
-            {
-                nome: "Modelo Biribinha - Analista de Crédito Virtual", 
-                desafio: "Crédito e risco", 
-                descricao: "Um modelo de IA específico e homologado, projetado para atuar como um analista de crédito virtual. Utiliza algoritmos de Machine Learning para processar dados de risco e score, permitindo a análise, avaliação e concessão de crédito de forma totalmente automática (100% *straight-through processing*), eliminando a intervenção manual em casos de baixo risco.",
-                maturidade: "Em Uso (Produção Plena)"
-            },
-            {
-                nome: "Crédito Fácil com IA", 
-                desafio: "Crédito e risco", 
-                descricao: "Modelos estatísticos e de IA aplicados à originação de crédito. Otimiza a definição de valores e limites de crédito mais adequados e personalizados para cada associado, equilibrando o apetite ao risco da instituição com a capacidade de pagamento do cliente, resultando em maior rentabilidade e menor inadimplência.",
-                maturidade: "Em Uso (Otimização Contínua)"
-            },
-            {
-                nome: "Modelos de Propensão para Consórcios", 
-                desafio: "Inteligência de mercado", 
-                descricao: "Modelos de Machine Learning treinados para identificar, dentro da base de associados, aqueles com a maior probabilidade (propensão) de contratar um consórcio. Isso permite direcionar campanhas de marketing e a atuação da força de vendas de forma altamente segmentada e eficiente, maximizando o retorno sobre o investimento (ROI) e a conversão.",
-                maturidade: "Em Uso (Campanhas Ativas)"
-            },
-            {
-                nome: "MIA (Monest IA)", 
-                desafio: "Recuperação de crédito", 
-                descricao: "Solução de IA dedicada à automação e otimização do processo de recuperação de crédito. Utiliza modelos preditivos para sugerir acordos de renegociação personalizados, determinar o melhor momento para contato com o devedor e definir estratégias de negociação que maximizem a recuperação de valores com o menor custo operacional.",
-                maturidade: "Em Uso (Produção Plena)"
-            }
-        ].map(item => ({
-            ...item,
-            desafio: categoryMap[item.desafio] || item.desafio
-        }));
-
-        // Lista de desafios CONSOLIDADOS (filtros)
-        const desafios = [
-            "Todas",
-            "Eficiência Operacional",
-            "Suporte e Experiência",
-            "Risco e Crédito",
-            "Insights e Previsão",
-            "Gestão de Talentos"
+        // --- 1. DADOS DE IA (Inseridos no lugar dos dados originais) ---
+        const rawData = [
+            { nome: "Databricks", desafio: "Análise preditiva", descricao: "Plataforma unificada para dados, análises e IA. Permite engenheiros de dados e cientistas colaborarem na arquitetura Lakehouse.", maturidade: "Em Uso (Plataforma Core)" },
+            { nome: "API GPT (OpenAI)", desafio: "Automação de processos", descricao: "Integra o poder dos grandes modelos de linguagem (LLMs) a sistemas internos.", maturidade: "Em Uso (Projetos Piloto e Integração)" },
+            { nome: "GitHub Copilot", desafio: "Automação de processos", descricao: "Assistente de codificação de IA que utiliza LLMs para sugerir código em tempo real.", maturidade: "Em Uso (Adoção por Desenvolvedores)" },
+            { nome: "Copilot Studio", desafio: "Atendimento ao cliente", descricao: "Ferramenta low-code para criar e personalizar copilotos e chatbots corporativos.", maturidade: "Em Desenvolvimento (Criação de Agentes)" },
+            { nome: "TheoGPT", desafio: "Atendimento ao cliente", descricao: "Assistente virtual interno baseado em Azure/OpenAI para colaboradores.", maturidade: "Em Uso (Adoção Interna)" },
+            { nome: "Perplexity.AI", desafio: "Busca e geração de informações", descricao: "Plataforma de busca que utiliza IA generativa para fornecer respostas diretas com fontes.", maturidade: "Em Prospecção (Estudo de Caso)" },
+            { nome: "Vitrine de Modelos", desafio: "Análise preditiva", descricao: "Repositório centralizado para catálogo de modelos de Machine Learning (ML).", maturidade: "Em Uso (Plataforma Core)" },
+            { nome: "Copilot Chat", desafio: "Atendimento ao cliente", descricao: "Chat integrado ao ecossistema de produtividade para resumos e criação de conteúdo.", maturidade: "Em Uso (Disponível para Colaboradores)" },
+            { nome: "Copilot 365", desafio: "Automação de processos", descricao: "IA generativa integrada ao Word, Excel, PowerPoint e Teams.", maturidade: "Em Uso (Disponível para Colaboradores)" },
+            { nome: "Teams Premium", desafio: "Atendimento ao cliente", descricao: "Recursos de IA para reuniões, como resumos inteligentes e tradução.", maturidade: "Em Uso (Adoção em Reuniões)" },
+            { nome: "API do OCR", desafio: "Automação de processos", descricao: "Extração de texto de imagens e documentos usando IA.", maturidade: "Em Uso (Processamento de Documentos)" },
+            { nome: "IA GEN na Base", desafio: "Busca e geração de informações", descricao: "RAG em repositório interno de documentos para respostas precisas.", maturidade: "Em Desenvolvimento (MVP Interno)" },
+            { nome: "Portal Rag", desafio: "Busca e geração de informações", descricao: "Plataforma base para criação de soluções RAG locais.", maturidade: "Em Desenvolvimento (Plataforma Base)" },
+            { nome: "Fala Diana", desafio: "Atendimento ao cliente", descricao: "Consulta de dados financeiros em linguagem natural.", maturidade: "Em Uso (Adoção Interna)" },
+            { nome: "IA no Gupy", desafio: "Recrutamento e seleção", descricao: "Triagem e ranqueamento automático de candidatos com IA.", maturidade: "Em Uso (Triagem Automática)" },
+            { nome: "Power Automate", desafio: "Automação de processos", descricao: "RPA com recursos de IA para fluxos de trabalho inteligentes.", maturidade: "Em Uso (Fluxos de Trabalho e RPA)" },
+            { nome: "Canva IA", desafio: "Criação visual", descricao: "Geração de imagens e designs com IA para marketing.", maturidade: "Em Uso (Adoção por Marketing)" },
+            { nome: "Modelo Biribinha", desafio: "Crédito e risco", descricao: "Analista de crédito virtual para concessão automática.", maturidade: "Em Uso (Produção Plena)" },
+            { nome: "Crédito Fácil IA", desafio: "Crédito e risco", descricao: "Modelos estatísticos para definição de limites e valores.", maturidade: "Em Uso (Otimização Contínua)" },
+            { nome: "Propensão Consórcio", desafio: "Inteligência de mercado", descricao: "Modelos de ML para identificar clientes com propensão de compra.", maturidade: "Em Uso (Campanhas Ativas)" },
+            { nome: "MIA (Monest IA)", desafio: "Recuperação de crédito", descricao: "Automação e otimização da recuperação de crédito com IA.", maturidade: "Em Uso (Produção Plena)" }
         ];
 
-        // Cores para cada desafio (Verde Sicredi: #3FA110)
-        const sicrediGreen = "#3FA110";
-        const desafioColors = {};
-        desafios.filter(d => d !== "Todas").forEach(d => {
-            desafioColors[d] = sicrediGreen;
-        });
+        // --- 2. MAPEAMENTO PARA AS 5 FATIAS (Necessário para a geometria do radar) ---
+        const dimensionMap = {
+            "Análise preditiva": "Dados e Decisão",
+            "Crédito e risco": "Dados e Decisão",
+            "Inteligência de mercado": "Dados e Decisão",
+            "Recuperação de crédito": "Dados e Decisão",
+            "Automação de processos": "Eficiência Operacional",
+            "Recrutamento e seleção": "Eficiência Operacional",
+            "Atendimento ao cliente": "Experiência do Cliente",
+            "Busca e geração de informações": "Gestão do Conhecimento",
+            "Criação visual": "Criatividade & Design"
+        };
+
+        // Mantendo cores distintas apenas para os PONTOS, mas a estrutura segue o padrão do arquivo original
+        const dimensionColors = {
+            "Dados e Decisão": "#3B82F6", // Azul
+            "Eficiência Operacional": "#10B981", // Verde
+            "Experiência do Cliente": "#F59E0B", // Laranja
+            "Gestão do Conhecimento": "#8B5CF6", // Roxo
+            "Criatividade & Design": "#EC4899"  // Rosa
+        };
+
+        // Prepara os dados
+        const originalRadarData = rawData.map(item => ({
+            ...item,
+            dimensaoAgrupada: dimensionMap[item.desafio] || "Outros"
+        }));
+
+        // Nomes das dimensões para os filtros e radar
+        const desafios = ["Todas", "Dados e Decisão", "Eficiência Operacional", "Experiência do Cliente", "Gestão do Conhecimento", "Criatividade & Design"];
+        const layers = [250, 200, 150]; // Raios das camadas
+
+        // --- FUNÇÕES MANTIDAS E ADAPTADAS DO ORIGINAL ---
         
-        // Parâmetros dos setores (agora 5 categorias, 36 graus cada)
         function getDesafioParams() {
             const filteredDesafios = desafios.filter(d => d !== "Todas");
-            const total = filteredDesafios.length; 
+            const total = filteredDesafios.length;
             let params = {};
             const angleSize = 180 / total;
 
             filteredDesafios.forEach((d, i) => {
                 const start = 180 - angleSize * i;
                 const end = 180 - angleSize * (i + 1);
+                // Usa a cor específica para o ponto, mas o "tema" do site continua verde
                 params[d] = {
                     start: start,
                     end: end,
-                    color: desafioColors[d] || "#3FA110"
+                    color: dimensionColors[d] || "#3FA110" 
                 };
             });
             return params;
         }
-        const layers = [250, 200, 150];
 
-        // Distribui pontos por desafio
-        function distributePoints(data, desafioParams, layers, filter="Todas") {
+        // Função auxiliar para determinar o raio baseado no texto da maturidade
+        function getRadiusForMaturity(maturidade) {
+            const m = maturidade.toLowerCase();
+            if (m.includes("prospecção") || m.includes("estudo")) return layers[0];
+            if (m.includes("desenvolvimento") || m.includes("mvp") || m.includes("piloto") || m.includes("criação")) return layers[1];
+            if (m.includes("uso") || m.includes("produção") || m.includes("disponível")) return layers[2];
+            return layers[1];
+        }
+
+        function distributePoints(data, desafioParams, filter="Todas") {
             let points = [];
             Object.keys(desafioParams).forEach(cat => {
                 if (filter !== "Todas" && filter !== cat) return;
-                const items = data.filter(d => d.desafio === cat);
+                
+                // Filtra pelos dados agrupados
+                const items = data.filter(d => d.dimensaoAgrupada === cat);
+                
                 const {start, end, color} = desafioParams[cat];
-                const angleStep = (end - start) / (items.length + 1);
+                const angleStep = (start - end) / (items.length + 1);
+                
                 items.forEach((item, i) => {
-                    const angle = start + angleStep * (i + 1);
-                    
-                    // Lógica de mapeamento de maturidade para a camada (radius)
-                    let radius;
-                    if (item.maturidade.includes("Prospecção")) {
-                        radius = layers[0]; // 250 (Externa)
-                    } else if (item.maturidade.includes("Desenvolvimento") || item.maturidade.includes("Piloto") || item.maturidade.includes("MVP")) {
-                        radius = layers[1]; // 200 (Meio)
-                    } else if (item.maturidade.includes("Uso Pleno") || item.maturidade.includes("Otimização Contínua") || item.maturidade.includes("Produção Plena") || item.maturidade.includes("Adoção")) {
-                        radius = layers[2]; // 150 (Interna)
-                    } else {
-                        radius = layers[1]; // Padrão
-                    }
+                    const angle = start - angleStep * (i + 1);
+                    const radius = getRadiusForMaturity(item.maturidade);
 
                     const rad = Math.PI * angle / 180;
                     const x = 350 + radius * Math.cos(rad);
                     const y = 350 - radius * Math.sin(rad);
-                    points.push({...item, x, y, color});
+                    points.push({...item, x, y, color, categoriaVisual: cat});
                 });
             });
             return points;
         }
 
-
-        // Funções da Página Principal (Adaptei para as novas IDs de IA)
-        const sidebar = document.getElementById('sidebar');
-        const mainContent = document.getElementById('main-content');
-        const menuToggle = document.getElementById('menu-toggle');
-        const menuItems = document.querySelectorAll('.menu-item');
-        const modal = document.getElementById('project-modal');
-        const closeModalButton = document.getElementById('close-modal');
-
-        function switchContent(contentId) {
-            // Seletor corrigido: Usa a classe page-content-section para alternar
-            document.querySelectorAll('.page-content-section').forEach(section => {
-                section.classList.add('hidden');
-            });
-            
-            // Encontra e mostra a seção correta
-            const activeSection = document.getElementById(`content-${contentId}`);
-            if (activeSection) {
-                activeSection.classList.remove('hidden');
-                
-                // Inicializa o radar se a seção for ativada
-                if (contentId === 'radar-ia') {
-                    activeSection.classList.add('flex-col', 'items-center'); 
-                    renderFilters();
-                    setupFilterEvents();
-                    renderRadarPoints('Todas');
-                } else {
-                     activeSection.classList.remove('flex-col', 'items-center');
-                }
-            }
-            // Atualiza o estado ativo do menu
-            menuItems.forEach(item => {
-                if (item.getAttribute('data-content-id') === contentId) {
-                    item.classList.add('bg-[#3FA110]', 'text-white', 'font-bold');
-                    item.classList.remove('text-gray-700', 'hover:bg-gray-100');
-                    item.setAttribute('aria-current', 'true');
-                } else {
-                    item.classList.remove('bg-[#3FA110]', 'text-white', 'font-bold');
-                    item.classList.add('text-gray-700', 'hover:bg-gray-100');
-                    item.removeAttribute('aria-current');
-                }
-            });
-        }
-
-        menuToggle.addEventListener('click', () => {
-            sidebar.classList.toggle('hidden');
-        });
-
-        menuItems.forEach(item => {
-            item.addEventListener('click', function(e) {
-                e.preventDefault();
-                const contentId = this.getAttribute('data-content-id');
-                switchContent(contentId);
-                
-                if (window.innerWidth < 1024) {
-                    sidebar.classList.add('hidden');
-                }
-                
-                // Scroll para o topo do conteúdo
-                mainContent.scrollIntoView({ behavior: 'smooth' });
-            });
-        });
-
-        // Lógica do Modal (Mantida)
-        if (closeModalButton) {
-            closeModalButton.addEventListener('click', () => {
-                modal.classList.add('hidden');
-            });
-        }
-
-        window.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && modal && !modal.classList.contains('hidden')) {
-                modal.classList.add('hidden');
-            }
-        });
-
-        // Funções do Radar (Transferidas)
         function renderFilters() {
             const section = document.getElementById('filterSection');
-            section.innerHTML = '';
+            section.innerHTML = ''; 
             desafios.forEach((d, idx) => {
                 const btn = document.createElement('button');
                 btn.className = 'content-item' + (idx === 0 ? ' active' : '');
@@ -588,8 +415,10 @@
         function renderRadarPoints(filter) {
             const svg = document.getElementById('radarSVG');
             Array.from(svg.querySelectorAll('.radar-point')).forEach(e => e.remove());
+            
             const desafioParams = getDesafioParams();
-            const points = distributePoints(originalRadarData, desafioParams, layers, filter);
+            const points = distributePoints(originalRadarData, desafioParams, filter);
+            
             points.forEach((pt) => {
                 const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
                 circle.setAttribute("cx", pt.x);
@@ -618,11 +447,10 @@
 
         function showTooltip(pt, element) {
             const tooltip = document.getElementById('tooltip');
-            tooltip.innerHTML = `<strong>${pt.nome}</strong><br><span style="color:#ffffff">${pt.desafio}</span>`;
+            tooltip.innerHTML = `<strong>${pt.nome}</strong><br><span style="color:#ffffff; font-size:0.8em">${pt.desafio}</span>`;
             tooltip.style.display = 'block';
 
             const rect = element.getBoundingClientRect();
-            
             tooltip.style.left = (rect.left + rect.width / 2 - tooltip.offsetWidth / 2) + 'px';
             tooltip.style.top = (rect.top - tooltip.offsetHeight - 8) + 'px';
         }
@@ -632,15 +460,24 @@
             tooltip.style.display = 'none';
         }
 
+        // Função de card com estilo original, adaptada para usar a cor da dimensão
         function showSelectedCard(pt) {
             const container = document.getElementById('selectedCardContainer');
             
+            const cardStyle = `
+                background: #ffffff; 
+                border: 1px solid #e0e0e0;
+                box-shadow: 0 4px 16px rgba(0,0,0,0.1); 
+                border-left: 10px solid ${pt.color};
+            `;
+            const maturityStyle = `color: ${pt.color};`;
+
             container.innerHTML = `
-                <div class="selected-card">
+                <div class="selected-card" style="${cardStyle}">
                     <div class="card-title text-xl"><strong>${pt.nome}</strong></div>
-                    <div class="card-category text-sm font-light text-gray-600">${pt.desafio}</div>
+                    <div class="card-category text-sm font-light text-gray-600">${pt.desafio} <span class="mx-1">|</span> ${pt.dimensaoAgrupada}</div>
                     <div class="card-desc">${pt.descricao}</div>
-                    <div class="card-maturity">Maturidade de Uso: ${pt.maturidade}</div>
+                    <div class="card-maturity" style="${maturityStyle}">Maturidade: ${pt.maturidade}</div>
                 </div>
             `;
         }
@@ -657,26 +494,79 @@
                 });
             });
         }
+
+        // Funções da Página Principal (Sidebar e Tabs)
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('main-content');
+        const menuToggle = document.getElementById('menu-toggle');
+        const menuItems = document.querySelectorAll('.menu-item');
+        const modal = document.getElementById('project-modal');
+        const closeModalButton = document.getElementById('close-modal');
+
+        function switchContent(contentId) {
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            const activeSection = document.getElementById(`content-${contentId}`);
+            if (activeSection) {
+                activeSection.classList.remove('hidden');
+                
+                if (contentId === 'radar') {
+                    renderFilters();
+                    setupFilterEvents();
+                    renderRadarPoints('Todas');
+                }
+            }
+            menuItems.forEach(item => {
+                if (item.getAttribute('data-content-id') === contentId) {
+                    item.classList.add('bg-[#3FA110]', 'text-white', 'font-bold');
+                    item.classList.remove('text-gray-700', 'hover:bg-gray-100');
+                    item.setAttribute('aria-current', 'true');
+                } else {
+                    item.classList.remove('bg-[#3FA110]', 'text-white', 'font-bold');
+                    item.classList.add('text-gray-700', 'hover:bg-gray-100');
+                    item.removeAttribute('aria-current');
+                }
+            });
+        }
+
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('hidden');
+        });
+
+        menuItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                const contentId = this.getAttribute('data-content-id');
+                switchContent(contentId);
+                
+                if (window.innerWidth < 1024) {
+                    sidebar.classList.add('hidden');
+                }
+                mainContent.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
         
-        // Inicialização da Página
+        closeModalButton.addEventListener('click', () => {
+            modal.classList.add('hidden');
+        });
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                modal.classList.add('hidden');
+            }
+        });
+
         window.onload = function() {
-            // ID de conteúdo inicial: intro-ia
-            const initialContentId = window.location.hash.substring(1) || 'intro-ia';
+            const initialContentId = window.location.hash.substring(1) || 'intro';
+            switchContent(initialContentId);
             
-            // IDs válidas no novo layout IA
-            const validContentIds = ['intro-ia', 'categoria-eficiencia', 'categoria-suporte', 'categoria-risco', 'categoria-insights', 'categoria-talentos', 'radar-ia'];
-            const defaultId = validContentIds.includes(initialContentId) ? initialContentId : 'intro-ia';
-            
-            switchContent(defaultId);
-            
-            // Fixa a sidebar em telas grandes
             if (window.innerWidth >= 1024) {
                 sidebar.classList.add('sidebar-fixed');
             }
             
-            // Redesenha o radar em caso de redimensionamento
             window.addEventListener('resize', () => {
-                const radarContainer = document.getElementById('content-radar-ia');
+                const radarContainer = document.getElementById('content-radar');
                 if (radarContainer && !radarContainer.classList.contains('hidden')) {
                     const activeFilter = document.querySelector('.content-filter-section .content-item.active');
                     const filter = activeFilter ? activeFilter.getAttribute('data-filter') : 'Todas';
