@@ -21,9 +21,7 @@
             transition: all 0.2s;
             color: #6b7280; 
         }
-        .tab-btn:hover {
-            color: #111827;
-        }
+        .tab-btn:hover { color: #111827; }
         .tab-btn.active {
             border-bottom-color: #3FA110;
             color: #3FA110;
@@ -35,15 +33,39 @@
         .projects-scroll-area::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 4px; }
         .projects-scroll-area::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
 
-        .animate-fade { animation: fadeIn 0.3s ease-in-out; }
+        .animate-fade { animation: fadeIn 0.5s ease-in-out; }
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .modal-backdrop {
             background-color: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(2px);
+        }
+
+        /* Estilos do Radar */
+        .radar-blip {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            transform-origin: center;
+        }
+        .radar-blip:hover {
+            r: 10;
+            stroke: white;
+            stroke-width: 2px;
+            filter: drop-shadow(0 0 4px rgba(0,0,0,0.3));
+        }
+        .radar-tooltip {
+            pointer-events: none;
+            transition: opacity 0.2s;
+        }
+        .radar-quadrant-label {
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            fill: #374151;
+            opacity: 0.7;
         }
     </style>
 </head>
@@ -70,6 +92,10 @@
                     <span class="font-bold text-[#3FA110] mr-2">⚫</span> Visão Geral
                 </a>
                 
+                <a href="#radar-visual" data-content-id="radar-visual" class="menu-item block px-4 py-2 text-sm font-bold text-[#3FA110] bg-green-50 hover:bg-green-100 rounded-lg border border-green-100 mb-4">
+                    📡 Visualização de Radar
+                </a>
+
                 <h3 class="px-4 pt-4 text-xs font-semibold uppercase text-gray-400">Categorias de IA</h3>
                 <a href="#cat-generativa" data-content-id="cat-generativa" class="menu-item block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg">IA Generativa & Produtividade</a>
                 <a href="#cat-dados" data-content-id="cat-dados" class="menu-item block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg">Dados & Analytics</a>
@@ -88,40 +114,60 @@
                     </div>
                     <div class="absolute top-0 right-0 -mt-10 -mr-10 w-64 h-64 bg-white opacity-10 rounded-full blur-3xl"></div>
                 </div>
-
                 <div class="p-8 lg:p-12 space-y-12">
                     <div class="prose max-w-none text-gray-600 text-lg leading-relaxed space-y-6">
-                        <p>
-                            A Inteligência Artificial já é uma realidade em nossos processos. Este <strong>Radar de IA</strong> centraliza todas as ferramentas, modelos e iniciativas homologadas, permitindo que você identifique oportunidades para acelerar a produtividade e a tomada de decisão.
-                        </p>
-                        <p>
-                            Navegue pelas categorias para descobrir desde assistentes virtuais que otimizam seu dia a dia até modelos preditivos avançados que revolucionam a concessão de crédito.
-                        </p>
+                        <p>A Inteligência Artificial já é uma realidade em nossos processos. Este <strong>Radar de IA</strong> centraliza todas as ferramentas homologadas, permitindo identificar oportunidades para acelerar a produtividade.</p>
                     </div>
+                    <div class="text-center">
+                        <button onclick="document.querySelector('a[data-content-id=\'radar-visual\']').click()" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-[#3FA110] hover:bg-[#327a0d] transition-colors cursor-pointer">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                            Acessar Radar Visual
+                        </button>
+                    </div>
+                </div>
+            </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <div class="bg-green-50 p-6 rounded-xl border border-green-100 hover:shadow-md transition-all duration-300 hover:-translate-y-1 group">
-                            <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-[#3FA110] mb-4 shadow-sm group-hover:scale-110 transition-transform">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                            </div>
-                            <h3 class="font-bold text-gray-800 text-xl mb-2">Agilidade</h3>
-                            <p class="text-sm text-gray-600 leading-relaxed">Automatize tarefas repetitivas e ganhe tempo para focar no que realmente importa: o relacionamento.</p>
+            <div id="content-radar-visual" class="content-section hidden w-full max-w-6xl mx-auto animate-fade">
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                    <div class="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50">
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-800">Mapa de Tecnologias</h2>
+                            <p class="text-sm text-gray-500">Visualização estratégica das soluções por maturidade.</p>
+                        </div>
+                        <div class="flex space-x-4 text-xs font-semibold">
+                            <div class="flex items-center"><span class="w-3 h-3 rounded-full bg-green-500 mr-1"></span> Adotar (Consolidado)</div>
+                            <div class="flex items-center"><span class="w-3 h-3 rounded-full bg-blue-500 mr-1"></span> Testar (Piloto/Beta)</div>
+                            <div class="flex items-center"><span class="w-3 h-3 rounded-full bg-gray-400 mr-1"></span> Avaliar (Estudo)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="p-4 flex flex-col lg:flex-row gap-8">
+                        <div class="flex-grow flex justify-center items-center bg-white relative" style="min-height: 600px;">
+                            <svg id="radar-svg" width="600" height="600" viewBox="0 0 600 600" class="max-w-full h-auto">
+                                <circle cx="300" cy="300" r="280" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1"></circle> <circle cx="300" cy="300" r="190" fill="#f3f4f6" stroke="#e5e7eb" stroke-width="1"></circle> <circle cx="300" cy="300" r="100" fill="#e5e7eb" stroke="#d1d5db" stroke-width="1"></circle> <line x1="300" y1="20" x2="300" y2="580" stroke="#9ca3af" stroke-width="1" stroke-dasharray="4 4"></line>
+                                <line x1="20" y1="300" x2="580" y2="300" stroke="#9ca3af" stroke-width="1" stroke-dasharray="4 4"></line>
+
+                                <text x="305" y="295" font-size="10" fill="#6b7280" font-weight="bold">ADOTAR</text>
+                                <text x="305" y="185" font-size="10" fill="#6b7280" font-weight="bold">TESTAR</text>
+                                <text x="305" y="95" font-size="10" fill="#6b7280" font-weight="bold">AVALIAR</text>
+
+                                <text x="150" y="40" text-anchor="middle" class="radar-quadrant-label" fill="#3FA110">IA Generativa</text>
+                                <text x="450" y="40" text-anchor="middle" class="radar-quadrant-label" fill="#3FA110">Dados & Analytics</text>
+                                <text x="150" y="580" text-anchor="middle" class="radar-quadrant-label" fill="#3FA110">Engenharia</text>
+                                <text x="450" y="580" text-anchor="middle" class="radar-quadrant-label" fill="#3FA110">Negócios</text>
+
+                                <g id="tooltip-group" class="radar-tooltip opacity-0 transition-opacity duration-200">
+                                    <rect x="0" y="0" width="160" height="60" rx="4" fill="white" stroke="#3FA110" stroke-width="1" filter="drop-shadow(0 2px 4px rgba(0,0,0,0.1))"></rect>
+                                    <text id="tooltip-text-title" x="10" y="20" font-size="12" font-weight="bold" fill="#1f2937">Titulo</text>
+                                    <text id="tooltip-text-status" x="10" y="38" font-size="10" fill="#6b7280">Status</text>
+                                </g>
+                            </svg>
                         </div>
 
-                        <div class="bg-green-50 p-6 rounded-xl border border-green-100 hover:shadow-md transition-all duration-300 hover:-translate-y-1 group">
-                            <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-[#3FA110] mb-4 shadow-sm group-hover:scale-110 transition-transform">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
-                            </div>
-                            <h3 class="font-bold text-gray-800 text-xl mb-2">Precisão</h3>
-                            <p class="text-sm text-gray-600 leading-relaxed">Utilize dados e modelos preditivos para tomar decisões mais assertivas e reduzir riscos.</p>
-                        </div>
-
-                        <div class="bg-green-50 p-6 rounded-xl border border-green-100 hover:shadow-md transition-all duration-300 hover:-translate-y-1 group">
-                            <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-[#3FA110] mb-4 shadow-sm group-hover:scale-110 transition-transform">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
-                            </div>
-                            <h3 class="font-bold text-gray-800 text-xl mb-2">Inovação</h3>
-                            <p class="text-sm text-gray-600 leading-relaxed">Explore novas fronteiras tecnológicas com assistentes virtuais e ferramentas de criação.</p>
+                        <div class="w-full lg:w-1/3 bg-gray-50 p-4 rounded-xl border border-gray-100 max-h-[600px] overflow-y-auto">
+                            <h3 class="font-bold text-gray-700 mb-4">Lista de Itens</h3>
+                            <div id="radar-list-container" class="space-y-4">
+                                </div>
                         </div>
                     </div>
                 </div>
@@ -148,20 +194,19 @@
                                         <h3 class="text-2xl font-bold text-gray-800">Conceito e Definição</h3>
                                     </div>
                                     <p class="text-lg text-gray-600 leading-relaxed">
-                                        A <strong>IA Generativa</strong> refere-se a modelos capazes de criar novos conteúdos, como texto, imagens, código e apresentações, a partir de comandos simples. No contexto de produtividade, essas ferramentas atuam como "copilotos", auxiliando na redação, resumo de informações e criação visual.
+                                        A <strong>IA Generativa</strong> refere-se a modelos capazes de criar novos conteúdos, como texto, imagens, código e apresentações, a partir de comandos simples. No contexto de produtividade, essas ferramentas atuam como "copilotos".
                                     </p>
                                     <div class="bg-green-50 border-l-4 border-[#3FA110] p-5 rounded-r-lg shadow-sm">
                                         <h4 class="text-[#3FA110] font-bold text-xs uppercase tracking-wider mb-2">Benefício Principal</h4>
-                                        <p class="text-gray-800 font-medium italic">"Reduzir o tempo gasto em tarefas operacionais e repetitivas, liberando o potencial humano para atividades criativas e estratégicas."</p>
+                                        <p class="text-gray-800 font-medium italic">"Reduzir o tempo gasto em tarefas operacionais e repetitivas, liberando o potencial humano."</p>
                                     </div>
                                 </div>
                                 <div class="lg:col-span-1">
                                     <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-6 sticky top-24">
                                         <h4 class="font-bold text-gray-800 mb-4 border-b border-gray-100 pb-2">Casos de Uso</h4>
                                         <ul class="space-y-3">
-                                            <li class="flex items-start"><svg class="w-5 h-5 text-[#3FA110] mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span class="text-sm text-gray-600">Resumo de reuniões e e-mails.</span></li>
-                                            <li class="flex items-start"><svg class="w-5 h-5 text-[#3FA110] mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span class="text-sm text-gray-600">Criação de apresentações e imagens.</span></li>
-                                            <li class="flex items-start"><svg class="w-5 h-5 text-[#3FA110] mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span class="text-sm text-gray-600">Busca inteligente de informações.</span></li>
+                                            <li class="flex items-start"><svg class="w-5 h-5 text-[#3FA110] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span class="text-sm text-gray-600">Resumo de reuniões.</span></li>
+                                            <li class="flex items-start"><svg class="w-5 h-5 text-[#3FA110] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span class="text-sm text-gray-600">Criação de apresentações.</span></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -183,7 +228,7 @@
             <div id="content-cat-dados" class="content-section hidden w-full max-w-6xl mx-auto space-y-6 animate-fade">
                 <div class="bg-white p-6 rounded-lg shadow-sm border-l-4 border-[#3FA110]">
                     <h2 class="text-2xl font-bold text-gray-800">Dados & Analytics</h2>
-                    <p class="text-gray-500">Transformando grandes volumes de dados em inteligência.</p>
+                    <p class="text-gray-500">Transformando dados em inteligência estratégica.</p>
                 </div>
                 <div class="bg-white rounded-lg shadow-md overflow-hidden min-h-[600px]">
                     <div class="flex border-b border-gray-200 px-4 space-x-4 overflow-x-auto">
@@ -201,20 +246,19 @@
                                         <h3 class="text-2xl font-bold text-gray-800">Conceito e Definição</h3>
                                     </div>
                                     <p class="text-lg text-gray-600 leading-relaxed">
-                                        A categoria de <strong>Dados & Analytics</strong> engloba plataformas e ferramentas robustas para processamento, governança e análise de grandes volumes de informação (Big Data). É aqui que os modelos de Machine Learning são criados e disponibilizados.
+                                        A categoria de <strong>Dados & Analytics</strong> engloba plataformas para processamento, governança e análise de grandes volumes de informação. É aqui que os modelos de Machine Learning são criados e disponibilizados.
                                     </p>
                                     <div class="bg-green-50 border-l-4 border-[#3FA110] p-5 rounded-r-lg shadow-sm">
                                         <h4 class="text-[#3FA110] font-bold text-xs uppercase tracking-wider mb-2">Objetivo Principal</h4>
-                                        <p class="text-gray-800 font-medium italic">"Democratizar o acesso a insights preditivos e garantir a governança dos dados para suportar decisões estratégicas."</p>
+                                        <p class="text-gray-800 font-medium italic">"Democratizar o acesso a insights preditivos e garantir a governança dos dados."</p>
                                     </div>
                                 </div>
                                 <div class="lg:col-span-1">
                                     <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-6 sticky top-24">
                                         <h4 class="font-bold text-gray-800 mb-4 border-b border-gray-100 pb-2">Práticas</h4>
                                         <ul class="space-y-3">
-                                            <li class="flex items-start"><svg class="w-5 h-5 text-[#3FA110] mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span class="text-sm text-gray-600">Modelagem preditiva e Machine Learning.</span></li>
-                                            <li class="flex items-start"><svg class="w-5 h-5 text-[#3FA110] mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span class="text-sm text-gray-600">Governança e compartilhamento de modelos.</span></li>
-                                            <li class="flex items-start"><svg class="w-5 h-5 text-[#3FA110] mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span class="text-sm text-gray-600">Consultas de dados em linguagem natural.</span></li>
+                                            <li class="flex items-start"><svg class="w-5 h-5 text-[#3FA110] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span class="text-sm text-gray-600">Modelagem preditiva.</span></li>
+                                            <li class="flex items-start"><svg class="w-5 h-5 text-[#3FA110] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span class="text-sm text-gray-600">Governança de modelos.</span></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -254,20 +298,19 @@
                                         <h3 class="text-2xl font-bold text-gray-800">Conceito e Definição</h3>
                                     </div>
                                     <p class="text-lg text-gray-600 leading-relaxed">
-                                        Esta categoria reúne as soluções de IA que impactam diretamente a atividade fim da cooperativa: concessão de crédito, recuperação de valores e vendas. São modelos customizados que utilizam dados históricos para otimizar resultados financeiros.
+                                        Reúne soluções de IA que impactam diretamente a atividade fim: concessão de crédito, recuperação e vendas. São modelos que utilizam dados históricos para otimizar resultados.
                                     </p>
                                     <div class="bg-green-50 border-l-4 border-[#3FA110] p-5 rounded-r-lg shadow-sm">
                                         <h4 class="text-[#3FA110] font-bold text-xs uppercase tracking-wider mb-2">Objetivo Principal</h4>
-                                        <p class="text-gray-800 font-medium italic">"Aumentar a assertividade na concessão de crédito, reduzir a inadimplência e qualificar a oferta de produtos aos associados."</p>
+                                        <p class="text-gray-800 font-medium italic">"Aumentar a assertividade na concessão de crédito e reduzir a inadimplência."</p>
                                     </div>
                                 </div>
                                 <div class="lg:col-span-1">
                                     <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-6 sticky top-24">
                                         <h4 class="font-bold text-gray-800 mb-4 border-b border-gray-100 pb-2">Aplicações</h4>
                                         <ul class="space-y-3">
-                                            <li class="flex items-start"><svg class="w-5 h-5 text-[#3FA110] mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span class="text-sm text-gray-600">Análise automática de crédito.</span></li>
-                                            <li class="flex items-start"><svg class="w-5 h-5 text-[#3FA110] mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span class="text-sm text-gray-600">Estratégias de cobrança e recuperação.</span></li>
-                                            <li class="flex items-start"><svg class="w-5 h-5 text-[#3FA110] mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span class="text-sm text-gray-600">Propensão de compra (Leads).</span></li>
+                                            <li class="flex items-start"><svg class="w-5 h-5 text-[#3FA110] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span class="text-sm text-gray-600">Análise automática de crédito.</span></li>
+                                            <li class="flex items-start"><svg class="w-5 h-5 text-[#3FA110] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span class="text-sm text-gray-600">Recuperação de crédito.</span></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -289,7 +332,7 @@
             <div id="content-cat-engenharia" class="content-section hidden w-full max-w-6xl mx-auto space-y-6 animate-fade">
                 <div class="bg-white p-6 rounded-lg shadow-sm border-l-4 border-[#3FA110]">
                     <h2 class="text-2xl font-bold text-gray-800">Engenharia & Automação</h2>
-                    <p class="text-gray-500">Recursos para desenvolvimento de software e automação de processos.</p>
+                    <p class="text-gray-500">Recursos para desenvolvimento de software e automação.</p>
                 </div>
                 <div class="bg-white rounded-lg shadow-md overflow-hidden min-h-[600px]">
                     <div class="flex border-b border-gray-200 px-4 space-x-4 overflow-x-auto">
@@ -307,20 +350,19 @@
                                         <h3 class="text-2xl font-bold text-gray-800">Conceito e Definição</h3>
                                     </div>
                                     <p class="text-lg text-gray-600 leading-relaxed">
-                                        Focada em equipes técnicas e desenvolvedores, esta categoria abrange ferramentas que utilizam IA para acelerar a escrita de código, automatizar fluxos de trabalho complexos (RPA/OCR) e integrar inteligência artificial em sistemas legados.
+                                        Focada em equipes técnicas, esta categoria abrange ferramentas que utilizam IA para acelerar a escrita de código, automatizar fluxos complexos e integrar inteligência artificial em sistemas legados.
                                     </p>
                                     <div class="bg-green-50 border-l-4 border-[#3FA110] p-5 rounded-r-lg shadow-sm">
                                         <h4 class="text-[#3FA110] font-bold text-xs uppercase tracking-wider mb-2">Objetivo Principal</h4>
-                                        <p class="text-gray-800 font-medium italic">"Acelerar o ciclo de desenvolvimento de software, garantir qualidade de código e automatizar processos manuais de back-office."</p>
+                                        <p class="text-gray-800 font-medium italic">"Acelerar o desenvolvimento de software e automatizar processos manuais."</p>
                                     </div>
                                 </div>
                                 <div class="lg:col-span-1">
                                     <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-6 sticky top-24">
                                         <h4 class="font-bold text-gray-800 mb-4 border-b border-gray-100 pb-2">Capacidades</h4>
                                         <ul class="space-y-3">
-                                            <li class="flex items-start"><svg class="w-5 h-5 text-[#3FA110] mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span class="text-sm text-gray-600">Geração de código e testes.</span></li>
-                                            <li class="flex items-start"><svg class="w-5 h-5 text-[#3FA110] mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span class="text-sm text-gray-600">OCR e extração de dados.</span></li>
-                                            <li class="flex items-start"><svg class="w-5 h-5 text-[#3FA110] mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span class="text-sm text-gray-600">Criação de Chatbots (Low-code).</span></li>
+                                            <li class="flex items-start"><svg class="w-5 h-5 text-[#3FA110] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span class="text-sm text-gray-600">Geração de código.</span></li>
+                                            <li class="flex items-start"><svg class="w-5 h-5 text-[#3FA110] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span class="text-sm text-gray-600">OCR e extração.</span></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -347,116 +389,187 @@
         <div class="flex items-center justify-center min-h-screen p-4 text-center sm:p-0">
             <div class="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg w-full">
                 <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <div class="sm:flex sm:items-start">
-                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
-                            <div class="flex justify-between items-start mb-2">
-                                <h3 class="text-xl leading-6 font-bold text-gray-900" id="modal-title">Título</h3>
-                                <button type="button" class="text-gray-400 hover:text-gray-500" onclick="closeModal()">
-                                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
-                                </button>
-                            </div>
-                            <div class="mt-2">
-                                <p class="text-sm text-gray-500" id="modal-description"></p>
-                                <div class="mt-4 pt-4 border-t border-gray-100">
-                                    <h4 class="text-sm font-bold text-gray-700 mb-1">Mais Detalhes:</h4>
-                                    <p class="text-sm text-gray-600 leading-relaxed" id="modal-full-details"></p>
-                                </div>
-                            </div>
+                    <div class="mt-3 text-left w-full">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2" id="modal-title">Título</h3>
+                        <div class="mb-4">
+                            <span id="modal-maturity" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">Maturidade</span>
+                        </div>
+                        <p class="text-sm text-gray-500 mb-4" id="modal-description"></p>
+                        <div class="pt-4 border-t border-gray-100">
+                            <h4 class="text-sm font-bold text-gray-700 mb-1">Mais Detalhes:</h4>
+                            <p class="text-sm text-gray-600 leading-relaxed" id="modal-full-details"></p>
                         </div>
                     </div>
                 </div>
-                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                    <button type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#3FA110] text-base font-medium text-white hover:bg-[#327a0d] focus:outline-none sm:ml-3 sm:w-auto sm:text-sm" onclick="closeModal()">Fechar</button>
+                <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse">
+                    <button type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#3FA110] text-base font-medium text-white hover:bg-[#327a0d] sm:ml-3 sm:w-auto sm:text-sm" onclick="closeModal()">Fechar</button>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // DADOS DO RADAR DE IA
         const projectsData = [
-            // IA GENERATIVA & PRODUTIVIDADE
-            { id: "gen-01", nome: "Copilot Chat", desafio: "Generativa", descricao: "Assistente de propósito geral baseado em IA para web e Teams.", detalhes: "Acessível via navegador ou Microsoft Teams. Responde perguntas, gera textos para e-mails e comunicados, cria imagens, analisa transcrições de reuniões e resume documentos. Otimiza tempo e apoia comunicação." },
-            { id: "gen-02", nome: "Copilot 365", desafio: "Generativa", descricao: "IA integrada ao pacote Office (Word, Excel, PPT).", detalhes: "Habilita o assistente de IA nos produtos Office 365. Cria e revisa conteúdos no Word, analisa planilhas no Excel, gera apresentações no PowerPoint e resume reuniões, padronizando comunicações." },
-            { id: "gen-03", nome: "Teams Premium", desafio: "Generativa", descricao: "Recursos de IA para otimizar reuniões no Teams.", detalhes: "Incorpora resumos inteligentes, tagueamento de assuntos, legendas ao vivo com tradução simultânea e segurança avançada para reuniões e webinars." },
-            { id: "gen-04", nome: "Canva IA", desafio: "Generativa", descricao: "Funcionalidades de IA para criação visual e design.", detalhes: "Inclui Magic Write (textos), geração de imagens por IA, tradução automática, remoção de fundos e sugestões de estrutura para apresentações e vídeos." },
-            { id: "gen-05", nome: "TheoGPT", desafio: "Generativa", descricao: "Assistente virtual interno do Sicredi (Azure/OpenAI).", detalhes: "Ferramenta segura desenvolvida internamente. Atua como assistente conversacional respondendo perguntas sobre produtos, serviços e processos internos da cooperativa." },
-            { id: "gen-06", nome: "Perplexity.AI", desafio: "Generativa", descricao: "Busca inteligente com linguagem natural e fontes.", detalhes: "Plataforma de busca que combina linguagem natural com acesso à web em tempo real. Apresenta resumos concisos com citação de fontes. Ideal para pesquisas ágeis (atenção à segurança de dados)." },
-            { id: "gen-07", nome: "IA integrada ao Gupy", desafio: "Generativa", descricao: "Automação e triagem em recrutamento e seleção.", detalhes: "Analisa currículos, identifica aderência às vagas, realiza triagens automáticas e sugere perguntas para entrevistas, aprendendo com dados históricos para recomendar perfis." },
+            { id: "gen-01", nome: "Copilot Chat", desafio: "Generativa", maturidade: "Adotar", descricao: "Assistente de propósito geral baseado em IA para web e Teams.", detalhes: "Acessível via navegador ou Microsoft Teams. Responde perguntas, gera textos para e-mails e comunicados." },
+            { id: "gen-02", nome: "Copilot 365", desafio: "Generativa", maturidade: "Adotar", descricao: "IA integrada ao pacote Office (Word, Excel, PPT).", detalhes: "Habilita o assistente de IA nos produtos Office 365. Cria e revisa conteúdos no Word, analisa planilhas no Excel." },
+            { id: "gen-03", nome: "Teams Premium", desafio: "Generativa", maturidade: "Adotar", descricao: "Recursos de IA para otimizar reuniões no Teams.", detalhes: "Incorpora resumos inteligentes, tagueamento de assuntos e legendas ao vivo com tradução simultânea." },
+            { id: "gen-04", nome: "Canva IA", desafio: "Generativa", maturidade: "Adotar", descricao: "Funcionalidades de IA para criação visual e design.", detalhes: "Inclui Magic Write (textos), geração de imagens por IA e remoção de fundos." },
+            { id: "gen-05", nome: "TheoGPT", desafio: "Generativa", maturidade: "Testar", descricao: "Assistente virtual interno do Sicredi (Azure/OpenAI).", detalhes: "Ferramenta segura desenvolvida internamente. Atua como assistente conversacional." },
+            { id: "gen-06", nome: "Perplexity.AI", desafio: "Generativa", maturidade: "Avaliar", descricao: "Busca inteligente com linguagem natural e fontes.", detalhes: "Plataforma de busca que combina linguagem natural com acesso à web em tempo real." },
+            { id: "gen-07", nome: "IA no Gupy", desafio: "Generativa", maturidade: "Adotar", descricao: "Automação e triagem em recrutamento e seleção.", detalhes: "Analisa currículos e identifica aderência às vagas automaticamente." },
 
-            // DADOS & ANALYTICS
-            { id: "data-01", nome: "Databricks", desafio: "Dados", descricao: "Plataforma para Big Data e modelos preditivos.", detalhes: "Ferramenta poderosa para análise de grandes volumes de dados e criação de modelos de Machine Learning. Centraliza dados e acelera a tomada de decisão estratégica." },
-            { id: "data-02", nome: "Vitrine de Modelos", desafio: "Dados", descricao: "Compartilhamento de modelos de ML homologados.", detalhes: "Aplicação no Databricks que permite compartilhar modelos de machine learning entre CAS, Centrais e Cooperativas, facilitando governança e reuso." },
-            { id: "data-03", nome: "Fala Diana", desafio: "Dados", descricao: "Plataforma conversacional para dados financeiros (Hyperion).", detalhes: "Permite interagir com dados do planejamento financeiro via chat. Reduz tempo de pesquisa e aumenta autonomia de executivos na tomada de decisão." },
+            { id: "data-01", nome: "Databricks", desafio: "Dados", maturidade: "Adotar", descricao: "Plataforma para Big Data e modelos preditivos.", detalhes: "Ferramenta poderosa para análise de grandes volumes de dados e criação de modelos de ML." },
+            { id: "data-02", nome: "Vitrine de Modelos", desafio: "Dados", maturidade: "Testar", descricao: "Compartilhamento de modelos de ML homologados.", detalhes: "Aplicação no Databricks que permite compartilhar modelos de machine learning." },
+            { id: "data-03", nome: "Fala Diana", desafio: "Dados", maturidade: "Avaliar", descricao: "Plataforma conversacional para dados financeiros.", detalhes: "Permite interagir com dados do planejamento financeiro via chat (Versão Beta)." },
 
-            // SOLUÇÕES DE NEGÓCIO
-            { id: "neg-01", nome: "Modelo Biribinha", desafio: "Negocios", descricao: "Analista de Crédito Virtual 100% automático.", detalhes: "Realiza toda a jornada de análise e concessão de crédito automaticamente. Reduziu em 99% o tempo do fluxo e em 75% o tempo médio de avaliação." },
-            { id: "neg-02", nome: "Crédito Fácil com IA", desafio: "Negocios", descricao: "Definição de limites adequados ao perfil do associado.", detalhes: "Utiliza modelos estatísticos para definir valores e limites. Em casos práticos, reduziu inadimplência em 66% e aumentou concessão em 446%." },
-            { id: "neg-03", nome: "Propensão para Consórcios", desafio: "Negocios", descricao: "Identificação de leads qualificados para consórcio.", detalhes: "Aplica IA para identificar associados com maior probabilidade de contratação, aumentando a eficiência do contato comercial e assertividade das ofertas." },
-            { id: "neg-04", nome: "MIA (Monest IA)", desafio: "Negocios", descricao: "IA voltada para recuperação de crédito.", detalhes: "Analisa perfil de inadimplentes, sugere acordos personalizados e o melhor canal de contato, aumentando taxas de recuperação de crédito." },
+            { id: "neg-01", nome: "Modelo Biribinha", desafio: "Negocios", maturidade: "Adotar", descricao: "Analista de Crédito Virtual 100% automático.", detalhes: "Realiza toda a jornada de análise e concessão de crédito automaticamente." },
+            { id: "neg-02", nome: "Crédito Fácil", desafio: "Negocios", maturidade: "Adotar", descricao: "Definição de limites adequados ao perfil do associado.", detalhes: "Utiliza modelos estatísticos para definir valores e limites." },
+            { id: "neg-03", nome: "Propensão Consórcio", desafio: "Negocios", maturidade: "Testar", descricao: "Identificação de leads qualificados.", detalhes: "Aplica IA para identificar associados com maior probabilidade de contratação." },
+            { id: "neg-04", nome: "MIA (Monest IA)", desafio: "Negocios", maturidade: "Testar", descricao: "IA voltada para recuperação de crédito.", detalhes: "Analisa perfil de inadimplentes e sugere acordos personalizados." },
 
-            // ENGENHARIA & AUTOMAÇÃO
-            { id: "eng-01", nome: "GitHub Copilot", desafio: "Engenharia", descricao: "Assistente de IA para desenvolvimento de software.", detalhes: "Sugere código, gera documentação e testes, auxiliando desenvolvedores. Aumenta produtividade e qualidade do código em sistemas financeiros." },
-            { id: "eng-02", nome: "API GPT (OpenAI)", desafio: "Engenharia", descricao: "Integração de IA generativa em sistemas locais.", detalhes: "Conecta sistemas internos à inteligência do modelo GPT. Permite automatizar tarefas, analisar documentos e criar chatbots personalizados via API." },
-            { id: "eng-03", nome: "API do OCR", desafio: "Engenharia", descricao: "Transformação de imagens em texto digital.", detalhes: "Automatiza a extração de dados de documentos escaneados. Acelera abertura de contas e análise de crédito, integrando dados aos sistemas." },
-            { id: "eng-04", nome: "Portal Rag", desafio: "Engenharia", descricao: "Solução para buscas em base de arquivos (RAG).", detalhes: "Permite criar repositórios de documentos e usar IA para gerar respostas baseadas neles. Acelera o desenvolvimento de IA em contextos locais." },
-            { id: "eng-05", nome: "Copilot Studio", desafio: "Engenharia", descricao: "Criação de agentes inteligentes (Low-code).", detalhes: "Ferramenta visual para criar chatbots e assistentes virtuais personalizados sem programação avançada. Conecta-se a dados corporativos." },
-            { id: "eng-06", nome: "Power Automate + IA", desafio: "Engenharia", descricao: "Automação de fluxos com recursos de IA.", detalhes: "Cria fluxos que reconhecem texto, analisam dados e extraem informações. Conecta-se ao Azure OpenAI para gerar textos e resumos em automações." },
-            { id: "eng-07", nome: "IA na Base de Conhecimento", desafio: "Engenharia", descricao: "Busca inteligente em normativos (ServiceNow).", detalhes: "Aplica IA aos documentos e normativos internos. Elabora resumos assertivos e reduz o tempo de resposta em buscas de suporte." }
+            { id: "eng-01", nome: "GitHub Copilot", desafio: "Engenharia", maturidade: "Adotar", descricao: "Assistente de IA para desenvolvimento de software.", detalhes: "Sugere código, gera documentação e testes, auxiliando desenvolvedores." },
+            { id: "eng-02", nome: "API GPT (OpenAI)", desafio: "Engenharia", maturidade: "Testar", descricao: "Integração de IA generativa em sistemas locais.", detalhes: "Conecta sistemas internos à inteligência do modelo GPT." },
+            { id: "eng-03", nome: "API do OCR", desafio: "Engenharia", maturidade: "Adotar", descricao: "Transformação de imagens em texto digital.", detalhes: "Automatiza a extração de dados de documentos escaneados." },
+            { id: "eng-04", nome: "Portal Rag", desafio: "Engenharia", maturidade: "Avaliar", descricao: "Solução para buscas em base de arquivos.", detalhes: "Permite criar repositórios de documentos e usar IA para gerar respostas." },
+            { id: "eng-05", nome: "Copilot Studio", desafio: "Engenharia", maturidade: "Testar", descricao: "Criação de agentes inteligentes (Low-code).", detalhes: "Ferramenta visual para criar chatbots e assistentes virtuais." },
+            { id: "eng-06", nome: "Power Automate", desafio: "Engenharia", maturidade: "Adotar", descricao: "Automação de fluxos com recursos de IA.", detalhes: "Cria fluxos que reconhecem texto e analisam dados." },
+            { id: "eng-07", nome: "Base Conhecimento", desafio: "Engenharia", maturidade: "Adotar", descricao: "Busca inteligente em normativos.", detalhes: "Aplica IA aos documentos e normativos internos no ServiceNow." }
         ];
 
-        // LÓGICA DO MODAL
+        // --- LÓGICA DO RADAR VISUAL ---
+        function renderRadarVisual() {
+            const svg = document.getElementById('radar-svg');
+            const tooltipGroup = document.getElementById('tooltip-group');
+            const tooltipTitle = document.getElementById('tooltip-text-title');
+            const tooltipStatus = document.getElementById('tooltip-text-status');
+            const listContainer = document.getElementById('radar-list-container');
+            
+            // Limpar blips antigos (manter estrutura base)
+            const oldBlips = svg.querySelectorAll('.radar-blip-element');
+            oldBlips.forEach(b => b.remove());
+            listContainer.innerHTML = '';
+
+            // Configuração
+            const centerX = 300;
+            const centerY = 300;
+            const radii = { 'Adotar': 80, 'Testar': 170, 'Avaliar': 260 }; // Raios aproximados
+            const colors = { 'Generativa': '#3FA110', 'Dados': '#F59E0B', 'Negocios': '#3B82F6', 'Engenharia': '#8B5CF6' };
+            const quadrantAngles = {
+                'Generativa': { start: 180, end: 270 }, // Topo Esquerda
+                'Dados': { start: 270, end: 360 },      // Topo Direita
+                'Negocios': { start: 0, end: 90 },      // Baixo Direita
+                'Engenharia': { start: 90, end: 180 }   // Baixo Esquerda
+            };
+
+            projectsData.forEach((p, index) => {
+                const angleRange = quadrantAngles[p.desafio];
+                if(!angleRange) return;
+
+                // Gerar posição aleatória dentro do anel e quadrante
+                const randomAngle = (Math.random() * (angleRange.end - angleRange.start - 10) + angleRange.start + 5) * (Math.PI / 180);
+                const minR = p.maturidade === 'Adotar' ? 20 : (p.maturidade === 'Testar' ? 110 : 200);
+                const maxR = p.maturidade === 'Adotar' ? 90 : (p.maturidade === 'Testar' ? 180 : 270);
+                const r = Math.random() * (maxR - minR) + minR;
+
+                const x = centerX + r * Math.cos(randomAngle);
+                const y = centerY + r * Math.sin(randomAngle);
+
+                // Criar Blip SVG
+                const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                circle.setAttribute("cx", x);
+                circle.setAttribute("cy", y);
+                circle.setAttribute("r", 6);
+                circle.setAttribute("fill", colors[p.desafio]);
+                circle.setAttribute("stroke", "white");
+                circle.setAttribute("stroke-width", "1");
+                circle.classList.add("radar-blip", "radar-blip-element");
+
+                // Eventos Mouse
+                circle.addEventListener('mouseenter', (e) => {
+                    tooltipTitle.textContent = p.nome;
+                    tooltipStatus.textContent = p.maturidade;
+                    // Posicionar Tooltip
+                    const bbox = tooltipGroup.getBBox(); // Simplificado
+                    tooltipGroup.setAttribute("transform", `translate(${x + 10}, ${y - 30})`);
+                    tooltipGroup.classList.remove("opacity-0");
+                });
+                circle.addEventListener('mouseleave', () => {
+                    tooltipGroup.classList.add("opacity-0");
+                });
+                circle.addEventListener('click', () => openModal(p.id));
+
+                svg.appendChild(circle);
+
+                // Adicionar à lista lateral
+                const item = document.createElement('div');
+                item.className = "flex items-center p-2 rounded hover:bg-gray-100 cursor-pointer text-xs";
+                item.innerHTML = `<span class="w-2 h-2 rounded-full mr-2" style="background-color:${colors[p.desafio]}"></span>
+                                  <div class="flex-1 font-medium text-gray-700">${p.nome}</div>
+                                  <span class="text-gray-400 text-[10px] uppercase">${p.maturidade}</span>`;
+                item.onclick = () => openModal(p.id);
+                listContainer.appendChild(item);
+            });
+            
+            // Mover tooltip para frente
+            svg.appendChild(tooltipGroup);
+        }
+
+        // --- FUNÇÕES PADRÃO ---
         const modal = document.getElementById('project-modal');
         function openModal(projectId) {
-            const project = projectsData.find(p => p.id === projectId);
-            if (!project) return;
-            document.getElementById('modal-title').textContent = project.nome;
-            document.getElementById('modal-description').textContent = project.descricao;
-            document.getElementById('modal-full-details').textContent = project.detalhes;
+            const p = projectsData.find(p => p.id === projectId);
+            if (!p) return;
+            document.getElementById('modal-title').textContent = p.nome;
+            document.getElementById('modal-description').textContent = p.descricao;
+            document.getElementById('modal-full-details').textContent = p.detalhes;
+            
+            const badge = document.getElementById('modal-maturity');
+            badge.textContent = p.maturidade;
+            if(p.maturidade === 'Adotar') badge.className = "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800";
+            else if(p.maturidade === 'Testar') badge.className = "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800";
+            else badge.className = "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800";
+
             modal.classList.remove('hidden');
         }
         function closeModal() { modal.classList.add('hidden'); }
 
-        // RENDERIZAÇÃO
         function renderProjects(projects, container) {
-            if (projects.length === 0) {
-                container.innerHTML = '<p class="text-gray-400 italic py-4 col-span-full text-center">Nenhum projeto encontrado.</p>';
-                return;
-            }
             container.innerHTML = projects.map(p => `
                 <div class="bg-white p-5 rounded-lg border border-gray-200 hover:shadow-md transition-shadow duration-200 h-full flex flex-col">
                     <h4 class="font-bold text-gray-800 mb-2 text-lg">${p.nome}</h4>
-                    <p class="text-sm text-gray-500 leading-relaxed mb-4 flex-grow line-clamp-3">${p.descricao}</p>
-                    <button onclick="openModal('${p.id}')" class="text-xs font-semibold text-gray-400 hover:text-[#3FA110] self-start border-b border-dotted border-gray-400 pb-0.5 transition-colors cursor-pointer">Ver detalhes</button>
+                    <span class="inline-block self-start px-2 py-0.5 text-[10px] uppercase font-bold tracking-wide rounded-md mb-3 bg-gray-100 text-gray-600">${p.maturidade}</span>
+                    <p class="text-sm text-gray-500 leading-relaxed mb-4 flex-grow">${p.descricao}</p>
+                    <button onclick="openModal('${p.id}')" class="text-xs font-semibold text-gray-400 hover:text-[#3FA110] self-start border-b border-dotted border-gray-400 pb-0.5 cursor-pointer">Ver detalhes</button>
                 </div>
             `).join('');
         }
 
         function filterProjects(searchTerm, dimensionName) {
-            const containers = document.querySelectorAll('.projects-container');
-            let targetContainer = null;
-            containers.forEach(c => { if(c.getAttribute('data-dimension') === dimensionName) targetContainer = c; });
-            if(!targetContainer) return;
+            const container = document.querySelector(`.projects-container[data-dimension="${dimensionName}"]`);
+            if(!container) return;
             const term = searchTerm.toLowerCase();
             const filtered = projectsData.filter(p => p.desafio === dimensionName && (p.nome.toLowerCase().includes(term) || p.descricao.toLowerCase().includes(term)));
-            renderProjects(filtered, targetContainer);
+            renderProjects(filtered, container);
         }
 
-        // NAVEGAÇÃO
         const sidebar = document.getElementById('sidebar');
         const menuToggle = document.getElementById('menu-toggle');
         const menuItems = document.querySelectorAll('.menu-item');
 
         function switchContent(contentId) {
-            document.querySelectorAll('.content-section').forEach(section => section.classList.add('hidden'));
-            const activeSection = document.getElementById(`content-${contentId}`);
-            if (activeSection) activeSection.classList.remove('hidden');
+            document.querySelectorAll('.content-section').forEach(s => s.classList.add('hidden'));
+            const active = document.getElementById(`content-${contentId}`);
+            if (active) active.classList.remove('hidden');
+            
+            // Se for a aba de radar, renderizar
+            if(contentId === 'radar-visual') renderRadarVisual();
+
             menuItems.forEach(item => {
                 if (item.getAttribute('data-content-id') === contentId) {
-                    item.classList.add('bg-gray-100', 'text-[#3FA110]', 'font-bold');
+                    item.classList.add('bg-green-50', 'text-[#3FA110]', 'font-bold');
                     item.classList.remove('text-gray-700');
                 } else {
-                    item.classList.remove('bg-gray-100', 'text-[#3FA110]', 'font-bold');
+                    item.classList.remove('bg-green-50', 'text-[#3FA110]', 'font-bold');
                     item.classList.add('text-gray-700');
                 }
             });
@@ -473,18 +586,16 @@
 
         function switchInnerTab(dimensionPrefix, tabName) {
             const container = document.getElementById(`content-${dimensionPrefix}`);
-            if(!container) return;
             container.querySelectorAll('.inner-tab-content').forEach(c => c.classList.add('hidden'));
-            container.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            const target = document.getElementById(`${dimensionPrefix}-${tabName}`);
-            if (target) target.classList.remove('hidden');
-            if(event && event.target) event.target.classList.add('active');
+            container.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(`${dimensionPrefix}-${tabName}`).classList.remove('hidden');
+            event.target.classList.add('active');
         }
 
         window.onload = function() {
-            document.querySelectorAll('.projects-container').forEach(container => {
-                const dimName = container.getAttribute('data-dimension');
-                renderProjects(projectsData.filter(p => p.desafio === dimName), container);
+            document.querySelectorAll('.projects-container').forEach(c => {
+                const dim = c.getAttribute('data-dimension');
+                renderProjects(projectsData.filter(p => p.desafio === dim), c);
             });
             switchContent('intro');
             if (window.innerWidth >= 1024) sidebar.classList.add('sidebar-fixed');
