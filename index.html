@@ -44,78 +44,28 @@
             backdrop-filter: blur(2px);
         }
 
-        /* --- ESTILOS DO RADAR MELHORADOS --- */
-        .radar-container {
-            background: radial-gradient(circle at center, #ffffff 0%, #f9fafb 100%);
-        }
-        
+        /* Estilos do Radar */
         .radar-blip {
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
             transform-origin: center;
         }
-        
-        .radar-blip circle {
-            transition: all 0.3s ease;
+        .radar-blip:hover {
+            r: 10;
             stroke: white;
-            stroke-width: 1.5px;
-            filter: drop-shadow(0 2px 3px rgba(0,0,0,0.15));
+            stroke-width: 2px;
+            filter: drop-shadow(0 0 4px rgba(0,0,0,0.3));
         }
-        
-        .radar-blip text {
-            font-family: 'Inter', sans-serif;
-            font-size: 9px;
-            font-weight: 700;
-            fill: white;
-            pointer-events: none;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-        }
-
-        /* Estado Ativo (Hover na lista ou no blip) */
-        .radar-blip.active { z-index: 50; }
-        .radar-blip.active circle {
-            r: 14;
-            stroke-width: 3px;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
-        }
-        .radar-blip.active text { font-size: 11px; }
-
-        /* Anéis do Radar */
-        .radar-ring {
-            fill: none;
-            stroke: #e5e7eb;
-            stroke-width: 1;
-        }
-        .radar-ring-fill-adotar { fill: rgba(34, 197, 94, 0.03); }
-        .radar-ring-fill-testar { fill: rgba(59, 130, 246, 0.02); }
-        .radar-ring-fill-avaliar { fill: rgba(107, 114, 128, 0.01); }
-
-        /* Tooltip Glassmorphism */
         .radar-tooltip {
             pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.2s, transform 0.2s;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(0,0,0,0.05);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            padding: 8px 12px;
-            position: absolute;
-            z-index: 100;
-            font-size: 12px;
-            white-space: nowrap;
+            transition: opacity 0.2s;
         }
-
-        /* Lista Lateral */
-        .radar-list-item {
-            transition: all 0.2s;
-            border-left: 3px solid transparent;
-        }
-        .radar-list-item:hover, .radar-list-item.active {
-            background-color: #f0fdf4; /* Verde bem claro */
-            border-left-color: #3FA110;
-            padding-left: 12px; /* Ligeiro deslocamento */
+        .radar-quadrant-label {
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            fill: #374151;
+            opacity: 0.7;
         }
     </style>
 </head>
@@ -142,7 +92,7 @@
                     <span class="font-bold text-[#3FA110] mr-2">⚫</span> Visão Geral
                 </a>
                 
-                <a href="#radar-visual" data-content-id="radar-visual" class="menu-item block px-4 py-2 text-sm font-bold text-[#3FA110] bg-green-50 hover:bg-green-100 rounded-lg border border-green-100 mb-4 shadow-sm">
+                <a href="#radar-visual" data-content-id="radar-visual" class="menu-item block px-4 py-2 text-sm font-bold text-[#3FA110] bg-green-50 hover:bg-green-100 rounded-lg border border-green-100 mb-4">
                     📡 Visualização de Radar
                 </a>
 
@@ -169,7 +119,7 @@
                         <p>A Inteligência Artificial já é uma realidade em nossos processos. Este <strong>Radar de IA</strong> centraliza todas as ferramentas homologadas, permitindo identificar oportunidades para acelerar a produtividade.</p>
                     </div>
                     <div class="text-center">
-                        <button onclick="document.querySelector('a[data-content-id=\'radar-visual\']').click()" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-[#3FA110] hover:bg-[#327a0d] transition-colors cursor-pointer transform hover:scale-105 duration-200">
+                        <button onclick="document.querySelector('a[data-content-id=\'radar-visual\']').click()" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-[#3FA110] hover:bg-[#327a0d] transition-colors cursor-pointer">
                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                             Acessar Radar Visual
                         </button>
@@ -178,53 +128,46 @@
             </div>
 
             <div id="content-radar-visual" class="content-section hidden w-full max-w-6xl mx-auto animate-fade">
-                <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
-                    <div class="p-6 border-b border-gray-100 flex flex-col md:flex-row justify-between items-center bg-gray-50/50">
-                        <div class="mb-4 md:mb-0">
-                            <h2 class="text-2xl font-bold text-gray-800 flex items-center">
-                                <svg class="w-6 h-6 mr-2 text-[#3FA110]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg>
-                                Mapa de Tecnologias
-                            </h2>
-                            <p class="text-sm text-gray-500">Passe o mouse sobre os pontos para identificar as soluções.</p>
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                    <div class="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50">
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-800">Mapa de Tecnologias</h2>
+                            <p class="text-sm text-gray-500">Visualização estratégica das soluções por maturidade.</p>
                         </div>
-                        <div class="flex space-x-6 text-xs font-semibold bg-white px-4 py-2 rounded-full shadow-sm border border-gray-100">
-                            <div class="flex items-center"><span class="w-3 h-3 rounded-full bg-green-500 mr-2 shadow-sm"></span> Adotar</div>
-                            <div class="flex items-center"><span class="w-3 h-3 rounded-full bg-blue-500 mr-2 shadow-sm"></span> Testar</div>
-                            <div class="flex items-center"><span class="w-3 h-3 rounded-full bg-gray-400 mr-2 shadow-sm"></span> Avaliar</div>
+                        <div class="flex space-x-4 text-xs font-semibold">
+                            <div class="flex items-center"><span class="w-3 h-3 rounded-full bg-green-500 mr-1"></span> Adotar (Consolidado)</div>
+                            <div class="flex items-center"><span class="w-3 h-3 rounded-full bg-blue-500 mr-1"></span> Testar (Piloto/Beta)</div>
+                            <div class="flex items-center"><span class="w-3 h-3 rounded-full bg-gray-400 mr-1"></span> Avaliar (Estudo)</div>
                         </div>
                     </div>
                     
-                    <div class="flex flex-col lg:flex-row h-[700px]"> <div class="w-full lg:w-2/3 radar-container relative flex items-center justify-center p-4">
-                            <svg id="radar-svg" width="600" height="600" viewBox="0 0 600 600" class="max-w-full h-auto drop-shadow-xl">
-                                <circle cx="300" cy="300" r="280" class="radar-ring radar-ring-fill-avaliar"></circle>
-                                <circle cx="300" cy="300" r="190" class="radar-ring radar-ring-fill-testar"></circle>
-                                <circle cx="300" cy="300" r="100" class="radar-ring radar-ring-fill-adotar"></circle>
-                                
-                                <line x1="300" y1="20" x2="300" y2="580" stroke="#d1d5db" stroke-width="1.5"></line>
-                                <line x1="20" y1="300" x2="580" y2="300" stroke="#d1d5db" stroke-width="1.5"></line>
+                    <div class="p-4 flex flex-col lg:flex-row gap-8">
+                        <div class="flex-grow flex justify-center items-center bg-white relative" style="min-height: 600px;">
+                            <svg id="radar-svg" width="600" height="600" viewBox="0 0 600 600" class="max-w-full h-auto">
+                                <circle cx="300" cy="300" r="280" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1"></circle> <circle cx="300" cy="300" r="190" fill="#f3f4f6" stroke="#e5e7eb" stroke-width="1"></circle> <circle cx="300" cy="300" r="100" fill="#e5e7eb" stroke="#d1d5db" stroke-width="1"></circle> <line x1="300" y1="20" x2="300" y2="580" stroke="#9ca3af" stroke-width="1" stroke-dasharray="4 4"></line>
+                                <line x1="20" y1="300" x2="580" y2="300" stroke="#9ca3af" stroke-width="1" stroke-dasharray="4 4"></line>
 
-                                <text x="305" y="295" font-size="9" fill="#9ca3af" font-weight="700" letter-spacing="1">ADOTAR</text>
-                                <text x="305" y="185" font-size="9" fill="#9ca3af" font-weight="700" letter-spacing="1">TESTAR</text>
-                                <text x="305" y="95" font-size="9" fill="#9ca3af" font-weight="700" letter-spacing="1">AVALIAR</text>
+                                <text x="305" y="295" font-size="10" fill="#6b7280" font-weight="bold">ADOTAR</text>
+                                <text x="305" y="185" font-size="10" fill="#6b7280" font-weight="bold">TESTAR</text>
+                                <text x="305" y="95" font-size="10" fill="#6b7280" font-weight="bold">AVALIAR</text>
 
-                                <text x="150" y="30" text-anchor="middle" font-size="12" font-weight="800" fill="#3FA110" style="text-transform: uppercase;">Generativa & Prod.</text>
-                                <text x="450" y="30" text-anchor="middle" font-size="12" font-weight="800" fill="#F59E0B" style="text-transform: uppercase;">Dados & Analytics</text>
-                                <text x="150" y="590" text-anchor="middle" font-size="12" font-weight="800" fill="#8B5CF6" style="text-transform: uppercase;">Engenharia</text>
-                                <text x="450" y="590" text-anchor="middle" font-size="12" font-weight="800" fill="#3B82F6" style="text-transform: uppercase;">Negócios & Crédito</text>
+                                <text x="150" y="40" text-anchor="middle" class="radar-quadrant-label" fill="#3FA110">IA Generativa</text>
+                                <text x="450" y="40" text-anchor="middle" class="radar-quadrant-label" fill="#3FA110">Dados & Analytics</text>
+                                <text x="150" y="580" text-anchor="middle" class="radar-quadrant-label" fill="#3FA110">Engenharia</text>
+                                <text x="450" y="580" text-anchor="middle" class="radar-quadrant-label" fill="#3FA110">Negócios</text>
 
-                                </svg>
-
-                            <div id="radar-tooltip-div" class="radar-tooltip"></div>
+                                <g id="tooltip-group" class="radar-tooltip opacity-0 transition-opacity duration-200">
+                                    <rect x="0" y="0" width="160" height="60" rx="4" fill="white" stroke="#3FA110" stroke-width="1" filter="drop-shadow(0 2px 4px rgba(0,0,0,0.1))"></rect>
+                                    <text id="tooltip-text-title" x="10" y="20" font-size="12" font-weight="bold" fill="#1f2937">Titulo</text>
+                                    <text id="tooltip-text-status" x="10" y="38" font-size="10" fill="#6b7280">Status</text>
+                                </g>
+                            </svg>
                         </div>
 
-                        <div class="w-full lg:w-1/3 bg-white border-l border-gray-100 overflow-y-auto custom-scrollbar">
-                            <div class="p-6">
-                                <h3 class="font-bold text-gray-800 text-lg mb-6 flex items-center">
-                                    Índice de Soluções
-                                </h3>
-                                <div id="radar-list-container" class="space-y-8">
-                                    </div>
-                            </div>
+                        <div class="w-full lg:w-1/3 bg-gray-50 p-4 rounded-xl border border-gray-100 max-h-[600px] overflow-y-auto">
+                            <h3 class="font-bold text-gray-700 mb-4">Lista de Itens</h3>
+                            <div id="radar-list-container" class="space-y-4">
+                                </div>
                         </div>
                     </div>
                 </div>
@@ -493,140 +436,85 @@
             { id: "eng-07", nome: "Base Conhecimento", desafio: "Engenharia", maturidade: "Adotar", descricao: "Busca inteligente em normativos.", detalhes: "Aplica IA aos documentos e normativos internos no ServiceNow." }
         ];
 
+        // --- LÓGICA DO RADAR VISUAL ---
         function renderRadarVisual() {
             const svg = document.getElementById('radar-svg');
-            const tooltipDiv = document.getElementById('radar-tooltip-div');
+            const tooltipGroup = document.getElementById('tooltip-group');
+            const tooltipTitle = document.getElementById('tooltip-text-title');
+            const tooltipStatus = document.getElementById('tooltip-text-status');
             const listContainer = document.getElementById('radar-list-container');
             
-            // Limpar antigos
+            // Limpar blips antigos (manter estrutura base)
             const oldBlips = svg.querySelectorAll('.radar-blip-element');
             oldBlips.forEach(b => b.remove());
             listContainer.innerHTML = '';
 
+            // Configuração
             const centerX = 300;
             const centerY = 300;
-            // Cores mais vivas para o radar
+            const radii = { 'Adotar': 80, 'Testar': 170, 'Avaliar': 260 }; // Raios aproximados
             const colors = { 'Generativa': '#3FA110', 'Dados': '#F59E0B', 'Negocios': '#3B82F6', 'Engenharia': '#8B5CF6' };
-            const categoryTitles = { 
-                'Generativa': 'IA Generativa & Produtividade', 
-                'Dados': 'Dados & Analytics', 
-                'Negocios': 'Negócios & Crédito', 
-                'Engenharia': 'Engenharia & Automação' 
-            };
             const quadrantAngles = {
-                'Generativa': { start: 180, end: 270 }, 
-                'Dados': { start: 270, end: 360 },      
-                'Negocios': { start: 0, end: 90 },      
-                'Engenharia': { start: 90, end: 180 }   
+                'Generativa': { start: 180, end: 270 }, // Topo Esquerda
+                'Dados': { start: 270, end: 360 },      // Topo Direita
+                'Negocios': { start: 0, end: 90 },      // Baixo Direita
+                'Engenharia': { start: 90, end: 180 }   // Baixo Esquerda
             };
-
-            // Agrupar por categoria para a lista
-            const groups = { 'Generativa': [], 'Dados': [], 'Negocios': [], 'Engenharia': [] };
 
             projectsData.forEach((p, index) => {
                 const angleRange = quadrantAngles[p.desafio];
                 if(!angleRange) return;
 
-                // Index para exibição (1-based)
-                p.radarIndex = index + 1;
-                groups[p.desafio].push(p);
-
-                // Posição no Radar
-                const randomAngle = (Math.random() * (angleRange.end - angleRange.start - 15) + angleRange.start + 8) * (Math.PI / 180);
-                const minR = p.maturidade === 'Adotar' ? 20 : (p.maturidade === 'Testar' ? 120 : 210);
-                const maxR = p.maturidade === 'Adotar' ? 80 : (p.maturidade === 'Testar' ? 170 : 260);
+                // Gerar posição aleatória dentro do anel e quadrante
+                const randomAngle = (Math.random() * (angleRange.end - angleRange.start - 10) + angleRange.start + 5) * (Math.PI / 180);
+                const minR = p.maturidade === 'Adotar' ? 20 : (p.maturidade === 'Testar' ? 110 : 200);
+                const maxR = p.maturidade === 'Adotar' ? 90 : (p.maturidade === 'Testar' ? 180 : 270);
                 const r = Math.random() * (maxR - minR) + minR;
 
                 const x = centerX + r * Math.cos(randomAngle);
                 const y = centerY + r * Math.sin(randomAngle);
 
-                // --- Criar Blip no SVG ---
-                const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
-                group.classList.add("radar-blip", "radar-blip-element");
-                group.setAttribute("id", `blip-${p.id}`);
-                group.setAttribute("transform", `translate(${x}, ${y})`);
-
+                // Criar Blip SVG
                 const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-                circle.setAttribute("r", 10); // Base size
+                circle.setAttribute("cx", x);
+                circle.setAttribute("cy", y);
+                circle.setAttribute("r", 6);
                 circle.setAttribute("fill", colors[p.desafio]);
+                circle.setAttribute("stroke", "white");
+                circle.setAttribute("stroke-width", "1");
+                circle.classList.add("radar-blip", "radar-blip-element");
 
-                const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
-                text.setAttribute("text-anchor", "middle");
-                text.setAttribute("dy", "3"); // Center vertically
-                text.textContent = p.radarIndex;
-
-                group.appendChild(circle);
-                group.appendChild(text);
-
-                // Interações Blip
-                group.addEventListener('mouseenter', () => {
-                    // Mostrar tooltip
-                    tooltipDiv.textContent = `${p.radarIndex}. ${p.nome}`;
-                    tooltipDiv.style.left = `${x + 20}px`; // Offset
-                    tooltipDiv.style.top = `${y - 20}px`;
-                    tooltipDiv.style.opacity = '1';
-                    
-                    // Highlight na lista
-                    const listItem = document.getElementById(`list-item-${p.id}`);
-                    if(listItem) {
-                        listItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        listItem.classList.add('active');
-                    }
+                // Eventos Mouse
+                circle.addEventListener('mouseenter', (e) => {
+                    tooltipTitle.textContent = p.nome;
+                    tooltipStatus.textContent = p.maturidade;
+                    // Posicionar Tooltip
+                    const bbox = tooltipGroup.getBBox(); // Simplificado
+                    tooltipGroup.setAttribute("transform", `translate(${x + 10}, ${y - 30})`);
+                    tooltipGroup.classList.remove("opacity-0");
                 });
-                
-                group.addEventListener('mouseleave', () => {
-                    tooltipDiv.style.opacity = '0';
-                    const listItem = document.getElementById(`list-item-${p.id}`);
-                    if(listItem) listItem.classList.remove('active');
+                circle.addEventListener('mouseleave', () => {
+                    tooltipGroup.classList.add("opacity-0");
                 });
+                circle.addEventListener('click', () => openModal(p.id));
 
-                group.addEventListener('click', () => openModal(p.id));
-                svg.appendChild(group);
+                svg.appendChild(circle);
+
+                // Adicionar à lista lateral
+                const item = document.createElement('div');
+                item.className = "flex items-center p-2 rounded hover:bg-gray-100 cursor-pointer text-xs";
+                item.innerHTML = `<span class="w-2 h-2 rounded-full mr-2" style="background-color:${colors[p.desafio]}"></span>
+                                  <div class="flex-1 font-medium text-gray-700">${p.nome}</div>
+                                  <span class="text-gray-400 text-[10px] uppercase">${p.maturidade}</span>`;
+                item.onclick = () => openModal(p.id);
+                listContainer.appendChild(item);
             });
-
-            // --- Construir Lista Lateral ---
-            Object.keys(groups).forEach(key => {
-                if(groups[key].length === 0) return;
-
-                // Título da Categoria
-                const catHeader = document.createElement('h4');
-                catHeader.className = "text-xs font-bold uppercase tracking-wider text-gray-400 mt-6 mb-2 border-b border-gray-100 pb-1";
-                catHeader.style.color = colors[key];
-                catHeader.textContent = categoryTitles[key];
-                listContainer.appendChild(catHeader);
-
-                // Itens
-                groups[key].forEach(p => {
-                    const item = document.createElement('div');
-                    item.id = `list-item-${p.id}`;
-                    item.className = "radar-list-item flex items-center p-2 rounded cursor-pointer mb-1";
-                    item.innerHTML = `
-                        <div class="w-6 h-6 rounded-full flex items-center justify-center text-white text-[10px] font-bold mr-3 flex-shrink-0 shadow-sm" style="background-color:${colors[p.desafio]}">
-                            ${p.radarIndex}
-                        </div>
-                        <div class="flex-1">
-                            <div class="text-sm font-medium text-gray-700 leading-tight">${p.nome}</div>
-                            <div class="text-[10px] text-gray-400">${p.maturidade}</div>
-                        </div>
-                    `;
-                    
-                    // Interação Lista -> Radar
-                    item.addEventListener('mouseenter', () => {
-                        const blip = document.getElementById(`blip-${p.id}`);
-                        if(blip) blip.classList.add('active');
-                    });
-                    item.addEventListener('mouseleave', () => {
-                        const blip = document.getElementById(`blip-${p.id}`);
-                        if(blip) blip.classList.remove('active');
-                    });
-                    item.addEventListener('click', () => openModal(p.id));
-
-                    listContainer.appendChild(item);
-                });
-            });
+            
+            // Mover tooltip para frente
+            svg.appendChild(tooltipGroup);
         }
 
-        // --- FUNÇÕES GERAIS ---
+        // --- FUNÇÕES PADRÃO ---
         const modal = document.getElementById('project-modal');
         function openModal(projectId) {
             const p = projectsData.find(p => p.id === projectId);
@@ -673,6 +561,7 @@
             const active = document.getElementById(`content-${contentId}`);
             if (active) active.classList.remove('hidden');
             
+            // Se for a aba de radar, renderizar
             if(contentId === 'radar-visual') renderRadarVisual();
 
             menuItems.forEach(item => {
@@ -708,9 +597,7 @@
                 const dim = c.getAttribute('data-dimension');
                 renderProjects(projectsData.filter(p => p.desafio === dim), c);
             });
-            
-            // Inicia no Radar Visual por padrão, ou Intro se preferir
-            switchContent('intro'); 
+            switchContent('intro');
             if (window.innerWidth >= 1024) sidebar.classList.add('sidebar-fixed');
         };
     </script>
