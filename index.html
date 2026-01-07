@@ -3,122 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Radar de IA - Sicredi</title>
+    <title>Radar de IA - Soluções e Tecnologias</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Estilos originais do RECIP (Preservados) */
         body { font-family: 'Inter', sans-serif; }
+        
         .sidebar-fixed {
             position: sticky;
-            top: 4rem; 
-            height: calc(100vh - 4rem); 
-            overflow-y: auto; 
+            top: 4rem;
+            height: calc(100vh - 4rem);
+            overflow-y: auto;
         }
-        .modal { transition: opacity 0.3s ease-in-out; }
 
-        .explanation-section {
-            max-width: 900px;
-            width: 95%;
-            margin-bottom: 24px;
-            padding: 16px;
-            background: #f8f8f8;
-            border: 1px solid #e0e0e0;
-            border-radius: 12px;
-            font-size: 0.95rem;
-            line-height: 1.5;
-            color: #4b5563;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            margin: 0 auto;
+        .tab-btn {
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+            color: #6b7280; 
         }
-        .explanation-section strong {
+        .tab-btn:hover {
+            color: #111827;
+        }
+        .tab-btn.active {
+            border-bottom-color: #3FA110;
             color: #3FA110;
-            font-weight: 700;
-        }
-        .explanation-list {
-            margin-top: 10px;
-            padding-left: 20px;
-        }
-        .explanation-list li {
-            margin-bottom: 5px;
-        }
-
-        /* Botões de filtro originais */
-        .content-filter-section { margin: 32px auto 0 auto; max-width: 900px; }
-        .content-item {
-            background: #f0f0f0;
-            color: #212121;
-            font-size: 1.1rem;
-            font-weight: 500;
-            border-radius: 16px;
-            padding: 10px 28px;
-            cursor: pointer;
-            transition: background 0.2s, color 0.2s;
-            border: none;
-            margin-bottom: 8px;
-        }
-        .content-item.active,
-        .content-item:hover {
-            background: #3FA110;
-            color: #ffffff;
-        }
-
-        .radar-container {
-            position: relative;
-            margin: 0 auto 32px auto;
-        }
-        .radar-svg {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        /* Card de Detalhes (Estilos Base originais) */
-        .selected-card-container {
-            width: 100%; 
-            display: flex;
-            justify-content: center;
-            margin-top: 16px;
-            margin-bottom: 32px;
-        }
-        .selected-card {
-            background: #ffffff;
-            border-radius: 22px;
-            padding: 28px 36px;
-            min-width: 320px;
-            max-width: 800px;
-            width: 95%; 
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            font-size: 1.1rem;
-            animation: fadeIn 0.3s;
-        }
-        .card-maturity {
             font-weight: 600;
-            margin-top: 8px;
-            padding-top: 8px;
-            border-top: 1px solid #e0e0e0;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px);}
-            to { opacity: 1; transform: translateY(0);}
         }
 
-        /* Tooltip original */
-        .tooltip {
-            position: fixed;
-            background: #3FA110; 
-            color: #fff;
-            padding: 8px 14px;
-            border-radius: 12px;
-            font-size: 1rem;
-            pointer-events: none;
-            z-index: 10;
-            box-shadow: 0 4px 24px rgba(63, 161, 16, 0.4);
-            display: none;
-            max-width: 250px;
-            word-break: break-word;
+        .projects-scroll-area::-webkit-scrollbar { width: 6px; }
+        .projects-scroll-area::-webkit-scrollbar-track { background: #f3f4f6; }
+        .projects-scroll-area::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 4px; }
+        .projects-scroll-area::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+
+        .animate-fade { animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-backdrop {
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(2px);
         }
     </style>
 </head>
@@ -127,13 +52,13 @@
     <header class="fixed top-0 left-0 right-0 h-16 bg-[#3FA110] shadow-md z-50 flex items-center justify-between px-4 lg:px-8">
         <div class="flex items-center space-x-4">
             <button id="menu-toggle" class="lg:hidden p-2 text-white hover:bg-[#327a0d] rounded-md">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
             </button>
-            <h1 class="text-xl lg:text-2xl font-bold text-white tracking-wider">RADAR IA | Ecossistema de Inteligência Artificial</h1>
+            <h1 class="text-xl lg:text-2xl font-bold text-white tracking-wider">Radar de Inteligência Artificial</h1>
         </div>
         <div class="flex items-center space-x-4">
-            <img src="img/sicredi-logo.png" alt="Logo Sicredi" class="h-8 hidden sm:block">
-            <img src="img/inovacao-logo.png" alt="Logo Inovação" class="h-8 hidden md:block">
+            <div class="h-8 w-8 bg-white/20 rounded-full flex items-center justify-center text-white font-bold text-xs">S</div>
+            <div class="h-8 w-8 bg-white/20 rounded-full flex items-center justify-center text-white font-bold text-xs">IA</div>
         </div>
     </header>
 
@@ -142,540 +67,428 @@
         <nav id="sidebar" class="fixed top-16 left-0 w-64 bg-white shadow-xl h-[calc(100vh-4rem)] overflow-y-auto z-40 lg:block hidden">
             <div class="p-4 space-y-2">
                 <a href="#intro" data-content-id="intro" class="menu-item block px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition duration-150 ease-in-out" aria-current="true">
-                    <span class="font-bold text-[#3FA110]">⚫</span> Introdução
+                    <span class="font-bold text-[#3FA110] mr-2">⚫</span> Visão Geral
                 </a>
                 
-                <h3 class="px-4 pt-4 text-xs font-semibold uppercase text-gray-400">Dimensões de IA</h3>
-                <a href="#dimensao-dados" data-content-id="dimensao-dados" class="menu-item block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg">
-                    <span class="font-bold text-[#3FA110]">1.</span> Dados e Decisão
-                </a>
-                <a href="#dimensao-eficiencia" data-content-id="dimensao-eficiencia" class="menu-item block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg">
-                    <span class="font-bold text-[#3FA110]">2.</span> Eficiência Operacional
-                </a>
-                <a href="#dimensao-experiencia" data-content-id="dimensao-experiencia" class="menu-item block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg">
-                    <span class="font-bold text-[#3FA110]">3.</span> Experiência do Cliente
-                </a>
-                <a href="#dimensao-conhecimento" data-content-id="dimensao-conhecimento" class="menu-item block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg">
-                    <span class="font-bold text-[#3FA110]">4.</span> Gestão do Conhecimento
-                </a>
-                <a href="#dimensao-criatividade" data-content-id="dimensao-criatividade" class="menu-item block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg">
-                    <span class="font-bold text-[#3FA110]">5.</span> Criatividade & Design
-                </a>
-
-                <h3 class="px-4 pt-4 text-xs font-semibold uppercase text-gray-400">Visão Geral</h3>
-                <a href="#radar" data-content-id="radar" class="menu-item block px-4 py-2 text-sm font-bold bg-[#3FA110] text-white rounded-lg transition duration-150 ease-in-out">
-                    <svg class="w-4 h-4 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                    Radar de Soluções
-                </a>
+                <h3 class="px-4 pt-4 text-xs font-semibold uppercase text-gray-400">Categorias de IA</h3>
+                <a href="#cat-generativa" data-content-id="cat-generativa" class="menu-item block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg">IA Generativa & Produtividade</a>
+                <a href="#cat-dados" data-content-id="cat-dados" class="menu-item block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg">Dados & Analytics</a>
+                <a href="#cat-negocios" data-content-id="cat-negocios" class="menu-item block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg">Soluções de Negócio & Crédito</a>
+                <a href="#cat-engenharia" data-content-id="cat-engenharia" class="menu-item block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg">Engenharia & Automação</a>
             </div>
         </nav>
 
-        <section id="main-content" class="flex-grow p-4 lg:p-8 lg:ml-64">
+        <section id="main-content" class="flex-grow p-4 lg:p-8 lg:ml-64 bg-gray-50 min-h-screen">
             
-            <div id="content-intro" class="content-section bg-white p-6 rounded-lg shadow-xl w-full max-w-7xl mx-auto">
-                <h2 class="text-3xl font-bold text-gray-800 mb-4">Radar de Adoção de IA</h2>
-                <div class="text-gray-700 space-y-4">
-                    <p>Bem-vindo ao radar interativo de Inteligência Artificial. Esta ferramenta mapeia as iniciativas e ferramentas de IA dentro do nosso ecossistema, categorizadas para facilitar a visualização de maturidade e propósito.</p>
-                    <p>Nossas inovações são categorizadas em cinco dimensões estratégicas:</p>
-                    <ul class="list-disc list-inside ml-4 space-y-2">
-                        <li><strong>Dados e Decisão:</strong> Análise preditiva, crédito, risco e inteligência de mercado.</li>
-                        <li><strong>Eficiência Operacional:</strong> Automação de processos (RPA), recrutamento e produtividade.</li>
-                        <li><strong>Experiência do Cliente:</strong> Chatbots, assistentes virtuais e atendimento.</li>
-                        <li><strong>Gestão do Conhecimento:</strong> Busca inteligente, RAG e organização da informação.</li>
-                        <li><strong>Criatividade & Design:</strong> Geração de imagens, marketing e ativos visuais.</li>
-                    </ul>
-                </div>
-            </div>
-
-            
-<div id="content-dimensao-dados" class="content-section bg-white p-6 rounded-lg shadow-xl w-full max-w-7xl mx-auto hidden">
-    <h2 class="text-3xl font-bold text-gray-800 mb-4">Dimensão 1: Dados e Decisão</h2>
-    <div class="text-gray-700 space-y-4">
-        <p>Esta dimensão é o alicerce para decisões estratégicas e operacionais baseadas em inteligência analítica. O objetivo é transformar dados em conhecimento, utilizando modelos matemáticos, estatísticos e algoritmos avançados para gerar previsões, identificar padrões e apoiar escolhas mais assertivas.</p>
-        
-        <p><strong>Principais características:</strong><br>
-        • Integração de dados históricos e em tempo real: Combina informações passadas com dados atuais para construir cenários robustos e dinâmicos.<br>
-        • Modelagem preditiva e prescritiva: Vai além da análise descritiva, antecipando tendências e sugerindo ações para otimizar resultados.<br>
-        • Automação de processos decisórios: Reduz a subjetividade e aumenta a velocidade na tomada de decisão.</p>
-        
-        <p><strong>Iniciativas contempladas:</strong><br>
-        • <strong>Crédito e Risco:</strong> Avaliação inteligente da capacidade de pagamento, mitigação de riscos e definição de políticas mais seguras.<br>
-        • <strong>Análise Preditiva:</strong> Antecipação de comportamentos do mercado e dos cooperados, permitindo estratégias proativas.<br>
-        • <strong>Recuperação de Crédito:</strong> Aplicação de algoritmos para priorizar ações de cobrança, reduzir inadimplência e melhorar a eficiência operacional.</p>
-        
-        <p><strong>Por que é importante?</strong><br>
-        Em um cenário competitivo e volátil, decisões baseadas em dados são fundamentais para garantir sustentabilidade e crescimento. Essa dimensão permite:<br>
-        • Personalização de ofertas: Ajuste de produtos e serviços conforme o perfil e necessidades do cooperado.<br>
-        • Mitigação de riscos: Redução de perdas financeiras por meio de análises precisas.<br>
-        • Agilidade e assertividade: Respostas rápidas e embasadas para desafios complexos.</p>
-        
-        <p>Em resumo, <strong>Dados e Decisão</strong> é a base para transformar informação em vantagem estratégica, garantindo que cada escolha seja orientada por evidências e não apenas por intuição.</p>
-    </div>
-</div>
-
-            </div>
-            
-            
-<div id="content-dimensao-eficiencia" class="content-section bg-white p-6 rounded-lg shadow-xl w-full max-w-7xl mx-auto hidden">
-    <h2 class="text-3xl font-bold text-gray-800 mb-4">Dimensão 2: Eficiência Operacional</h2>
-    <div class="text-gray-700 space-y-4">
-        <p>Esta dimensão tem como objetivo aumentar a produtividade e reduzir custos por meio da otimização de processos internos. A ideia é eliminar tarefas manuais e repetitivas, liberando as equipes para atividades estratégicas e de maior valor agregado. A tecnologia atua como um catalisador para transformar rotinas operacionais em fluxos automatizados, garantindo agilidade, precisão e escalabilidade.</p>
-        
-        <p><strong>Principais características:</strong><br>
-        • Automação de processos: Uso de ferramentas como RPA (Robotic Process Automation) para executar tarefas repetitivas com rapidez e sem erros.<br>
-        • Digitalização e integração: Conexão entre sistemas para reduzir retrabalho e melhorar a fluidez das operações.<br>
-        • Foco em valor agregado: Redirecionamento do tempo das equipes para atividades que exigem análise, criatividade e tomada de decisão.</p>
-        
-        <p><strong>Iniciativas contempladas:</strong><br>
-        • <strong>Automação de Processos:</strong> Implementação de bots e scripts para tarefas administrativas, financeiras e operacionais, garantindo maior eficiência e redução de falhas humanas.<br>
-        • <strong>Recrutamento e Seleção:</strong> Aplicação de inteligência artificial para triagem automática de currículos, análise de perfis e priorização de candidatos, acelerando contratações e melhorando a experiência do candidato.</p>
-        
-        <p><strong>Por que é importante?</strong><br>
-        A eficiência operacional é essencial para manter a competitividade e a sustentabilidade em um mercado dinâmico. Com processos automatizados, a cooperativa:<br>
-        • Reduz custos operacionais: Menos retrabalho e menor dependência de tarefas manuais.<br>
-        • Aumenta a velocidade e a precisão: Processos mais rápidos e com menor margem de erro.<br>
-        • Melhora a experiência interna: Equipes mais focadas em inovação e estratégias, em vez de atividades repetitivas.</p>
-        
-        <p>Em resumo, <strong>Eficiência Operacional</strong> é sobre transformar a forma como trabalhamos, tornando os processos mais inteligentes, ágeis e orientados para resultados.</p>
-    </div>
-</div>
-
-            </div>
-            
-            
-<div id="content-dimensao-experiencia" class="content-section bg-white p-6 rounded-lg shadow-xl w-full max-w-7xl mx-auto hidden">
-    <h2 class="text-3xl font-bold text-gray-800 mb-4">Dimensão 3: Experiência do Cliente</h2>
-    <div class="text-gray-700 space-y-4">
-        <p>Esta dimensão é dedicada a melhorar a interação entre a cooperativa e seus associados ou colaboradores, utilizando inteligência artificial para oferecer atendimento ágil, personalizado e eficiente. O objetivo é transformar a experiência do cliente em algo mais fluido e satisfatório, garantindo que cada contato seja relevante e resolutivo.</p>
-        
-        <p><strong>Principais características:</strong><br>
-        • Interação inteligente: Uso de assistentes virtuais e chatbots capazes de compreender linguagem natural e responder de forma contextualizada.<br>
-        • Análise de sentimento: Monitoramento das emoções e percepções do cliente para ajustar abordagens e melhorar a experiência.<br>
-        • Disponibilidade contínua: Atendimento 24/7, garantindo suporte imediato e redução de filas ou esperas.</p>
-        
-        <p><strong>Iniciativas contempladas:</strong><br>
-        • <strong>Atendimento ao Cliente com IA:</strong> Implementação de chatbots inteligentes para responder dúvidas, realizar transações simples e encaminhar solicitações complexas para equipes humanas.<br>
-        • <strong>Assistentes Virtuais:</strong> Ferramentas que auxiliam tanto associados quanto colaboradores, oferecendo informações rápidas e suporte em processos internos.<br>
-        • <strong>Análise de Sentimento:</strong> Aplicação de algoritmos para interpretar feedbacks, interações em chats e redes sociais, identificando pontos críticos e oportunidades de melhoria.</p>
-        
-        <p><strong>Por que é importante?</strong><br>
-        A experiência do cliente é um fator decisivo para fidelização e satisfação. Com soluções baseadas em IA, a cooperativa:<br>
-        • Aumenta a agilidade no atendimento: Respostas rápidas e precisas, reduzindo tempo de espera.<br>
-        • Personaliza interações: Ajuste da comunicação conforme perfil e histórico do cliente.<br>
-        • Melhora a percepção de valor: Atendimento eficiente e proativo, fortalecendo a relação de confiança.</p>
-        
-        <p>Em resumo, <strong>Experiência do Cliente</strong> é sobre colocar o associado no centro, utilizando tecnologia para criar conexões mais humanas, mesmo em interações digitais.</p>
-    </div>
-</div>
-
-            </div>
-            
-            
-<div id="content-dimensao-conhecimento" class="content-section bg-white p-6 rounded-lg shadow-xl w-full max-w-7xl mx-auto hidden">
-    <h2 class="text-3xl font-bold text-gray-800 mb-4">Dimensão 4: Gestão do Conhecimento</h2>
-    <div class="text-gray-700 space-y-4">
-        <p>Esta dimensão trata da forma como a cooperativa armazena, organiza, busca e gera informações internas. Em um ambiente corporativo cada vez mais orientado por dados, a gestão eficiente do conhecimento é essencial para garantir agilidade, precisão e inovação. O objetivo é transformar grandes volumes de documentos e conteúdos em informações acessíveis e úteis para todos.</p>
-        
-        <p><strong>Principais características:</strong><br>
-        • Centralização e organização: Estruturação de bases de dados e documentos para facilitar o acesso e reduzir redundâncias.<br>
-        • Busca inteligente: Ferramentas avançadas que permitem localizar informações rapidamente, mesmo em grandes repositórios.<br>
-        • Geração de conhecimento: Uso de IA para criar novos conteúdos a partir de dados existentes, agregando valor às operações.</p>
-        
-        <p><strong>Iniciativas contempladas:</strong><br>
-        • <strong>Sistemas de Busca Avançada:</strong> Soluções que permitem encontrar documentos, políticas e informações internas com rapidez e precisão.<br>
-        • <strong>Geração de Informações com IA:</strong> Aplicação de modelos que sintetizam dados e produzem relatórios, insights e recomendações.<br>
-        • <strong>Tecnologias RAG (Retrieval Augmented Generation):</strong> Integração entre busca e geração, possibilitando “conversar” com bases internas e obter respostas contextualizadas, como se fosse um assistente especializado.</p>
-        
-        <p><strong>Por que é importante?</strong><br>
-        A gestão do conhecimento é um pilar para a tomada de decisão e para a inovação. Com soluções inteligentes, a cooperativa:<br>
-        • Reduz tempo de busca: Informações disponíveis de forma rápida e confiável.<br>
-        • Melhora a qualidade das decisões: Acesso a dados completos e contextualizados.<br>
-        • Impulsiona a inovação: Criação de novos conteúdos e insights a partir do conhecimento existente.</p>
-        
-        <p>Em resumo, <strong>Gestão do Conhecimento</strong> é sobre transformar informação dispersa em inteligência acessível, garantindo que o saber coletivo seja um diferencial competitivo.</p>
-    </div>
-</div>
-
-            </div>
-            
-            
-<div id="content-dimensao-criatividade" class="content-section bg-white p-6 rounded-lg shadow-xl w-full max-w-7xl mx-auto hidden">
-    <h2 class="text-3xl font-bold text-gray-800 mb-4">Dimensão 5: Criatividade &amp; Design</h2>
-    <div class="text-gray-700 space-y-4">
-        <p>Esta dimensão explora o potencial da Inteligência Artificial Generativa para criar conteúdos visuais inovadores e impactantes. O objetivo é apoiar áreas como marketing e comunicação na produção de imagens, vídeos e layouts de forma ágil, criativa e personalizada, ampliando as possibilidades de expressão e reduzindo o tempo de execução.</p>
-        
-        <p><strong>Principais características:</strong><br>
-        • Criação visual automatizada: Geração de imagens, ilustrações e vídeos com base em descrições textuais ou referências visuais.<br>
-        • Personalização e diversidade: Produção de conteúdos adaptados a diferentes públicos, campanhas e canais.<br>
-        • Agilidade e escalabilidade: Redução do tempo necessário para criar materiais, permitindo maior volume e variedade de peças.</p>
-        
-        <p><strong>Iniciativas contempladas:</strong><br>
-        • <strong>Ferramentas de IA Generativa:</strong> Plataformas que criam imagens, vídeos e elementos gráficos sob demanda.<br>
-        • <strong>Suporte ao Marketing e Comunicação:</strong> Recursos que ajudam na concepção de campanhas, posts para redes sociais e materiais institucionais.<br>
-        • <strong>Design assistido por IA:</strong> Soluções que sugerem layouts, paletas de cores e estilos visuais alinhados à identidade da marca.</p>
-        
-        <p><strong>Por que é importante?</strong><br>
-        A criatividade é um diferencial competitivo, e a IA amplia as possibilidades de criação sem substituir o toque humano. Com essas ferramentas, a cooperativa:<br>
-        • Ganha velocidade na produção: Conteúdos prontos em minutos, sem depender de processos manuais extensos.<br>
-        • Reduz custos: Menor necessidade de terceirização ou longos ciclos de design.<br>
-        • Impulsiona a inovação: Criação de peças únicas e originais, explorando novas ideias e formatos.</p>
-        
-        <p>Em resumo, <strong>Criatividade &amp; Design</strong> é sobre unir tecnologia e imaginação para transformar ideias em experiências visuais marcantes.</p>
-    </div>
-</div>
-
-            </div>
-
-            <div id="content-radar" class="content-section bg-white p-6 rounded-lg shadow-xl w-full max-w-7xl mx-auto hidden flex-col items-center">
-                <div class="w-full text-center mb-8">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-2">Análise de Ferramentas IA</h2>
-                    <p class="text-lg text-gray-600">Visualização por Dimensões de Uso</p>
+            <div id="content-intro" class="content-section bg-white rounded-2xl shadow-lg w-full max-w-6xl mx-auto animate-fade overflow-hidden">
+                <div class="bg-gradient-to-r from-[#3FA110] to-[#2d7a0b] p-10 text-white relative overflow-hidden">
+                    <div class="relative z-10">
+                        <h2 class="text-4xl font-bold mb-4 tracking-tight">Radar de IA</h2>
+                        <p class="text-xl opacity-90 max-w-3xl font-light">Mapeando o futuro: conheça as soluções de Inteligência Artificial disponíveis para transformar nossa cooperativa.</p>
+                    </div>
+                    <div class="absolute top-0 right-0 -mt-10 -mr-10 w-64 h-64 bg-white opacity-10 rounded-full blur-3xl"></div>
                 </div>
 
-                <div class="explanation-section w-full">
-                    <p>
-                        O <strong>Radar de IA</strong> mapeia as ferramentas conforme sua maturidade.
-                    </p>
-                    <p><strong>Interpretação da Posição dos Pontos:</strong></p>
-                    <ul class="explanation-list">
-                        <li><strong>Eixos Radiais:</strong> Indicam a categoria da solução.</li>
-                        <li style="font-weight: bold;">
-                            — Linha mais Externa: Prospecção / Estudo.
-                        </li>
-                        <li style="font-weight: bold;">
-                            — Linha do Meio: Desenvolvimento / Piloto / MVP.
-                        </li>
-                        <li style="font-weight: bold;">
-                            — Linha mais Interna: Uso Pleno / Produção.
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="content-filter-section w-full flex flex-wrap justify-center gap-4 mb-8" id="filterSection">
+                <div class="p-8 lg:p-12 space-y-12">
+                    <div class="prose max-w-none text-gray-600 text-lg leading-relaxed space-y-6">
+                        <p>
+                            A Inteligência Artificial já é uma realidade em nossos processos. Este <strong>Radar de IA</strong> centraliza todas as ferramentas, modelos e iniciativas homologadas, permitindo que você identifique oportunidades para acelerar a produtividade e a tomada de decisão.
+                        </p>
+                        <p>
+                            Navegue pelas categorias para descobrir desde assistentes virtuais que otimizam seu dia a dia até modelos preditivos avançados que revolucionam a concessão de crédito.
+                        </p>
                     </div>
 
-                <div class="radar-container mx-auto" style="width: 600px; max-width: 95vw;">
-                    <svg class="radar-svg" id="radarSVG" viewBox="0 0 700 400">
-                        <path d="M100,350 A250,250 0 0,1 600,350" stroke="#3FA110" stroke-width="1.5" fill="none" opacity="0.6"/>
-                        <path d="M150,350 A200,200 0 0,1 550,350" stroke="#3FA110" stroke-width="1.5" fill="none" opacity="0.4"/>
-                        <path d="M200,350 A150,150 0 0,1 500,350" stroke="#3FA110" stroke-width="1.5" fill="none" opacity="0.2"/>
-                        <line x1="350" y1="350" x2="100" y2="350" stroke="#6B6B6B" stroke-width="0.5" opacity="0.8"/>
-                        <line x1="350" y1="350" x2="350" y2="100" stroke="#6B6B6B" stroke-width="0.5" opacity="0.8"/>
-                        <line x1="350" y1="350" x2="600" y2="350" stroke="#6B6B6B" stroke-width="0.5" opacity="0.8"/>
-                        <line x1="350" y1="350" x2="552.25" y2="202.9" stroke="#6B6B6B" stroke-width="0.5" opacity="0.8"/>
-                        <line x1="350" y1="350" x2="427.32" y2="101.3" stroke="#6B6B6B" stroke-width="0.5" opacity="0.8"/>
-                        <line x1="350" y1="350" x2="272.68" y2="101.3" stroke="#6B6B6B" stroke-width="0.5" opacity="0.8"/>
-                        <line x1="350" y1="350" x2="147.75" y2="202.9" stroke="#6B6B6B" stroke-width="0.5" opacity="0.8"/>
-                    </svg>
-                    <div class="tooltip" id="tooltip"></div>
-                </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="bg-green-50 p-6 rounded-xl border border-green-100 hover:shadow-md transition-all duration-300 hover:-translate-y-1 group">
+                            <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-[#3FA110] mb-4 shadow-sm group-hover:scale-110 transition-transform">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                            </div>
+                            <h3 class="font-bold text-gray-800 text-xl mb-2">Agilidade</h3>
+                            <p class="text-sm text-gray-600 leading-relaxed">Automatize tarefas repetitivas e ganhe tempo para focar no que realmente importa: o relacionamento.</p>
+                        </div>
 
-                <div class="selected-card-container w-full" id="selectedCardContainer"></div>
+                        <div class="bg-green-50 p-6 rounded-xl border border-green-100 hover:shadow-md transition-all duration-300 hover:-translate-y-1 group">
+                            <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-[#3FA110] mb-4 shadow-sm group-hover:scale-110 transition-transform">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                            </div>
+                            <h3 class="font-bold text-gray-800 text-xl mb-2">Precisão</h3>
+                            <p class="text-sm text-gray-600 leading-relaxed">Utilize dados e modelos preditivos para tomar decisões mais assertivas e reduzir riscos.</p>
+                        </div>
+
+                        <div class="bg-green-50 p-6 rounded-xl border border-green-100 hover:shadow-md transition-all duration-300 hover:-translate-y-1 group">
+                            <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-[#3FA110] mb-4 shadow-sm group-hover:scale-110 transition-transform">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                            </div>
+                            <h3 class="font-bold text-gray-800 text-xl mb-2">Inovação</h3>
+                            <p class="text-sm text-gray-600 leading-relaxed">Explore novas fronteiras tecnológicas com assistentes virtuais e ferramentas de criação.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            <div id="content-cat-generativa" class="content-section hidden w-full max-w-6xl mx-auto space-y-6 animate-fade">
+                <div class="bg-white p-6 rounded-lg shadow-sm border-l-4 border-[#3FA110]">
+                    <h2 class="text-2xl font-bold text-gray-800">IA Generativa & Produtividade</h2>
+                    <p class="text-gray-500">Ferramentas para potencializar o dia a dia dos colaboradores.</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-md overflow-hidden min-h-[600px]">
+                    <div class="flex border-b border-gray-200 px-4 space-x-4 overflow-x-auto">
+                        <button class="tab-btn active px-4 py-3 font-medium text-sm" onclick="switchInnerTab('cat-generativa', 'oquee')">O que é</button>
+                        <button class="tab-btn px-4 py-3 font-medium text-sm" onclick="switchInnerTab('cat-generativa', 'solucoes')">Soluções Disponíveis</button>
+                    </div>
+                    <div class="p-6">
+                        <div id="cat-generativa-oquee" class="inner-tab-content block animate-fade">
+                            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+                                <div class="lg:col-span-2 space-y-6">
+                                    <div class="flex items-center space-x-3 mb-2">
+                                        <div class="p-2 bg-green-100 rounded-lg text-[#3FA110]">
+                                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
+                                        </div>
+                                        <h3 class="text-2xl font-bold text-gray-800">Conceito e Definição</h3>
+                                    </div>
+                                    <p class="text-lg text-gray-600 leading-relaxed">
+                                        A <strong>IA Generativa</strong> refere-se a modelos capazes de criar novos conteúdos, como texto, imagens, código e apresentações, a partir de comandos simples. No contexto de produtividade, essas ferramentas atuam como "copilotos", auxiliando na redação, resumo de informações e criação visual.
+                                    </p>
+                                    <div class="bg-green-50 border-l-4 border-[#3FA110] p-5 rounded-r-lg shadow-sm">
+                                        <h4 class="text-[#3FA110] font-bold text-xs uppercase tracking-wider mb-2">Benefício Principal</h4>
+                                        <p class="text-gray-800 font-medium italic">"Reduzir o tempo gasto em tarefas operacionais e repetitivas, liberando o potencial humano para atividades criativas e estratégicas."</p>
+                                    </div>
+                                </div>
+                                <div class="lg:col-span-1">
+                                    <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-6 sticky top-24">
+                                        <h4 class="font-bold text-gray-800 mb-4 border-b border-gray-100 pb-2">Casos de Uso</h4>
+                                        <ul class="space-y-3">
+                                            <li class="flex items-start"><svg class="w-5 h-5 text-[#3FA110] mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span class="text-sm text-gray-600">Resumo de reuniões e e-mails.</span></li>
+                                            <li class="flex items-start"><svg class="w-5 h-5 text-[#3FA110] mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span class="text-sm text-gray-600">Criação de apresentações e imagens.</span></li>
+                                            <li class="flex items-start"><svg class="w-5 h-5 text-[#3FA110] mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span class="text-sm text-gray-600">Busca inteligente de informações.</span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="cat-generativa-solucoes" class="inner-tab-content hidden">
+                            <div class="mb-4 relative">
+                                <input type="text" placeholder="Buscar solução..." class="w-full md:w-1/2 p-2 pl-8 rounded border border-gray-300 focus:outline-none focus:border-[#3FA110] text-sm" onkeyup="filterProjects(this.value, 'Generativa')">
+                                <svg class="w-4 h-4 text-gray-400 absolute left-2.5 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                            </div>
+                            <div class="projects-scroll-area overflow-y-auto max-h-[500px] pr-2">
+                                <div class="projects-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" data-dimension="Generativa"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="content-cat-dados" class="content-section hidden w-full max-w-6xl mx-auto space-y-6 animate-fade">
+                <div class="bg-white p-6 rounded-lg shadow-sm border-l-4 border-[#3FA110]">
+                    <h2 class="text-2xl font-bold text-gray-800">Dados & Analytics</h2>
+                    <p class="text-gray-500">Transformando grandes volumes de dados em inteligência.</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-md overflow-hidden min-h-[600px]">
+                    <div class="flex border-b border-gray-200 px-4 space-x-4 overflow-x-auto">
+                        <button class="tab-btn active px-4 py-3 font-medium text-sm" onclick="switchInnerTab('cat-dados', 'oquee')">O que é</button>
+                        <button class="tab-btn px-4 py-3 font-medium text-sm" onclick="switchInnerTab('cat-dados', 'solucoes')">Soluções Disponíveis</button>
+                    </div>
+                    <div class="p-6">
+                        <div id="cat-dados-oquee" class="inner-tab-content block animate-fade">
+                            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+                                <div class="lg:col-span-2 space-y-6">
+                                    <div class="flex items-center space-x-3 mb-2">
+                                        <div class="p-2 bg-green-100 rounded-lg text-[#3FA110]">
+                                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                                        </div>
+                                        <h3 class="text-2xl font-bold text-gray-800">Conceito e Definição</h3>
+                                    </div>
+                                    <p class="text-lg text-gray-600 leading-relaxed">
+                                        A categoria de <strong>Dados & Analytics</strong> engloba plataformas e ferramentas robustas para processamento, governança e análise de grandes volumes de informação (Big Data). É aqui que os modelos de Machine Learning são criados e disponibilizados.
+                                    </p>
+                                    <div class="bg-green-50 border-l-4 border-[#3FA110] p-5 rounded-r-lg shadow-sm">
+                                        <h4 class="text-[#3FA110] font-bold text-xs uppercase tracking-wider mb-2">Objetivo Principal</h4>
+                                        <p class="text-gray-800 font-medium italic">"Democratizar o acesso a insights preditivos e garantir a governança dos dados para suportar decisões estratégicas."</p>
+                                    </div>
+                                </div>
+                                <div class="lg:col-span-1">
+                                    <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-6 sticky top-24">
+                                        <h4 class="font-bold text-gray-800 mb-4 border-b border-gray-100 pb-2">Práticas</h4>
+                                        <ul class="space-y-3">
+                                            <li class="flex items-start"><svg class="w-5 h-5 text-[#3FA110] mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span class="text-sm text-gray-600">Modelagem preditiva e Machine Learning.</span></li>
+                                            <li class="flex items-start"><svg class="w-5 h-5 text-[#3FA110] mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span class="text-sm text-gray-600">Governança e compartilhamento de modelos.</span></li>
+                                            <li class="flex items-start"><svg class="w-5 h-5 text-[#3FA110] mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span class="text-sm text-gray-600">Consultas de dados em linguagem natural.</span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="cat-dados-solucoes" class="inner-tab-content hidden">
+                            <div class="mb-4 relative">
+                                <input type="text" placeholder="Buscar solução..." class="w-full md:w-1/2 p-2 pl-8 rounded border border-gray-300 focus:outline-none focus:border-[#3FA110] text-sm" onkeyup="filterProjects(this.value, 'Dados')">
+                                <svg class="w-4 h-4 text-gray-400 absolute left-2.5 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                            </div>
+                            <div class="projects-scroll-area overflow-y-auto max-h-[500px] pr-2">
+                                <div class="projects-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" data-dimension="Dados"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="content-cat-negocios" class="content-section hidden w-full max-w-6xl mx-auto space-y-6 animate-fade">
+                <div class="bg-white p-6 rounded-lg shadow-sm border-l-4 border-[#3FA110]">
+                    <h2 class="text-2xl font-bold text-gray-800">Soluções de Negócio & Crédito</h2>
+                    <p class="text-gray-500">IA aplicada ao core business da cooperativa.</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-md overflow-hidden min-h-[600px]">
+                    <div class="flex border-b border-gray-200 px-4 space-x-4 overflow-x-auto">
+                        <button class="tab-btn active px-4 py-3 font-medium text-sm" onclick="switchInnerTab('cat-negocios', 'oquee')">O que é</button>
+                        <button class="tab-btn px-4 py-3 font-medium text-sm" onclick="switchInnerTab('cat-negocios', 'solucoes')">Soluções Disponíveis</button>
+                    </div>
+                    <div class="p-6">
+                        <div id="cat-negocios-oquee" class="inner-tab-content block animate-fade">
+                            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+                                <div class="lg:col-span-2 space-y-6">
+                                    <div class="flex items-center space-x-3 mb-2">
+                                        <div class="p-2 bg-green-100 rounded-lg text-[#3FA110]">
+                                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                        </div>
+                                        <h3 class="text-2xl font-bold text-gray-800">Conceito e Definição</h3>
+                                    </div>
+                                    <p class="text-lg text-gray-600 leading-relaxed">
+                                        Esta categoria reúne as soluções de IA que impactam diretamente a atividade fim da cooperativa: concessão de crédito, recuperação de valores e vendas. São modelos customizados que utilizam dados históricos para otimizar resultados financeiros.
+                                    </p>
+                                    <div class="bg-green-50 border-l-4 border-[#3FA110] p-5 rounded-r-lg shadow-sm">
+                                        <h4 class="text-[#3FA110] font-bold text-xs uppercase tracking-wider mb-2">Objetivo Principal</h4>
+                                        <p class="text-gray-800 font-medium italic">"Aumentar a assertividade na concessão de crédito, reduzir a inadimplência e qualificar a oferta de produtos aos associados."</p>
+                                    </div>
+                                </div>
+                                <div class="lg:col-span-1">
+                                    <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-6 sticky top-24">
+                                        <h4 class="font-bold text-gray-800 mb-4 border-b border-gray-100 pb-2">Aplicações</h4>
+                                        <ul class="space-y-3">
+                                            <li class="flex items-start"><svg class="w-5 h-5 text-[#3FA110] mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span class="text-sm text-gray-600">Análise automática de crédito.</span></li>
+                                            <li class="flex items-start"><svg class="w-5 h-5 text-[#3FA110] mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span class="text-sm text-gray-600">Estratégias de cobrança e recuperação.</span></li>
+                                            <li class="flex items-start"><svg class="w-5 h-5 text-[#3FA110] mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span class="text-sm text-gray-600">Propensão de compra (Leads).</span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="cat-negocios-solucoes" class="inner-tab-content hidden">
+                            <div class="mb-4 relative">
+                                <input type="text" placeholder="Buscar solução..." class="w-full md:w-1/2 p-2 pl-8 rounded border border-gray-300 focus:outline-none focus:border-[#3FA110] text-sm" onkeyup="filterProjects(this.value, 'Negocios')">
+                                <svg class="w-4 h-4 text-gray-400 absolute left-2.5 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                            </div>
+                            <div class="projects-scroll-area overflow-y-auto max-h-[500px] pr-2">
+                                <div class="projects-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" data-dimension="Negocios"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="content-cat-engenharia" class="content-section hidden w-full max-w-6xl mx-auto space-y-6 animate-fade">
+                <div class="bg-white p-6 rounded-lg shadow-sm border-l-4 border-[#3FA110]">
+                    <h2 class="text-2xl font-bold text-gray-800">Engenharia & Automação</h2>
+                    <p class="text-gray-500">Recursos para desenvolvimento de software e automação de processos.</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-md overflow-hidden min-h-[600px]">
+                    <div class="flex border-b border-gray-200 px-4 space-x-4 overflow-x-auto">
+                        <button class="tab-btn active px-4 py-3 font-medium text-sm" onclick="switchInnerTab('cat-engenharia', 'oquee')">O que é</button>
+                        <button class="tab-btn px-4 py-3 font-medium text-sm" onclick="switchInnerTab('cat-engenharia', 'solucoes')">Soluções Disponíveis</button>
+                    </div>
+                    <div class="p-6">
+                        <div id="cat-engenharia-oquee" class="inner-tab-content block animate-fade">
+                            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+                                <div class="lg:col-span-2 space-y-6">
+                                    <div class="flex items-center space-x-3 mb-2">
+                                        <div class="p-2 bg-green-100 rounded-lg text-[#3FA110]">
+                                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                                        </div>
+                                        <h3 class="text-2xl font-bold text-gray-800">Conceito e Definição</h3>
+                                    </div>
+                                    <p class="text-lg text-gray-600 leading-relaxed">
+                                        Focada em equipes técnicas e desenvolvedores, esta categoria abrange ferramentas que utilizam IA para acelerar a escrita de código, automatizar fluxos de trabalho complexos (RPA/OCR) e integrar inteligência artificial em sistemas legados.
+                                    </p>
+                                    <div class="bg-green-50 border-l-4 border-[#3FA110] p-5 rounded-r-lg shadow-sm">
+                                        <h4 class="text-[#3FA110] font-bold text-xs uppercase tracking-wider mb-2">Objetivo Principal</h4>
+                                        <p class="text-gray-800 font-medium italic">"Acelerar o ciclo de desenvolvimento de software, garantir qualidade de código e automatizar processos manuais de back-office."</p>
+                                    </div>
+                                </div>
+                                <div class="lg:col-span-1">
+                                    <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-6 sticky top-24">
+                                        <h4 class="font-bold text-gray-800 mb-4 border-b border-gray-100 pb-2">Capacidades</h4>
+                                        <ul class="space-y-3">
+                                            <li class="flex items-start"><svg class="w-5 h-5 text-[#3FA110] mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span class="text-sm text-gray-600">Geração de código e testes.</span></li>
+                                            <li class="flex items-start"><svg class="w-5 h-5 text-[#3FA110] mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span class="text-sm text-gray-600">OCR e extração de dados.</span></li>
+                                            <li class="flex items-start"><svg class="w-5 h-5 text-[#3FA110] mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span class="text-sm text-gray-600">Criação de Chatbots (Low-code).</span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="cat-engenharia-solucoes" class="inner-tab-content hidden">
+                            <div class="mb-4 relative">
+                                <input type="text" placeholder="Buscar solução..." class="w-full md:w-1/2 p-2 pl-8 rounded border border-gray-300 focus:outline-none focus:border-[#3FA110] text-sm" onkeyup="filterProjects(this.value, 'Engenharia')">
+                                <svg class="w-4 h-4 text-gray-400 absolute left-2.5 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                            </div>
+                            <div class="projects-scroll-area overflow-y-auto max-h-[500px] pr-2">
+                                <div class="projects-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" data-dimension="Engenharia"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </section>
     </main>
 
-    <div id="project-modal" class="modal fixed inset-0 bg-gray-900 bg-opacity-75 z-[60] flex items-center justify-center hidden">
-        <div class="bg-white rounded-lg p-6 w-11/12 md:w-1/2 max-w-lg shadow-2xl relative">
-            <button id="close-modal" class="absolute top-3 right-3 text-gray-500 hover:text-gray-800 transition">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-            </button>
-            <h3 id="modal-title" class="text-2xl font-bold text-gray-800 mb-2"></h3>
-            <p id="modal-dimension" class="text-md font-medium text-[#3FA110] mb-4"></p>
-            <p id="modal-description" class="text-gray-700 leading-relaxed"></p>
-            <p id="modal-maturity-status" class="text-lg font-semibold text-gray-600 mt-4 pt-3 border-t border-gray-200"></p>
+    <div id="project-modal" class="fixed inset-0 z-[60] hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="modal-backdrop absolute inset-0 transition-opacity" onclick="closeModal()"></div>
+        <div class="flex items-center justify-center min-h-screen p-4 text-center sm:p-0">
+            <div class="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg w-full">
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div class="sm:flex sm:items-start">
+                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-xl leading-6 font-bold text-gray-900" id="modal-title">Título</h3>
+                                <button type="button" class="text-gray-400 hover:text-gray-500" onclick="closeModal()">
+                                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                                </button>
+                            </div>
+                            <div class="mt-2">
+                                <p class="text-sm text-gray-500" id="modal-description"></p>
+                                <div class="mt-4 pt-4 border-t border-gray-100">
+                                    <h4 class="text-sm font-bold text-gray-700 mb-1">Mais Detalhes:</h4>
+                                    <p class="text-sm text-gray-600 leading-relaxed" id="modal-full-details"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <button type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#3FA110] text-base font-medium text-white hover:bg-[#327a0d] focus:outline-none sm:ml-3 sm:w-auto sm:text-sm" onclick="closeModal()">Fechar</button>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
-        // --- 1. DADOS DE IA (Inseridos no lugar dos dados originais) ---
-        const rawData = [
-            { nome: "Databricks", desafio: "Análise preditiva", descricao: "Plataforma unificada para dados, análises e IA. Permite engenheiros de dados e cientistas colaborarem na arquitetura Lakehouse.", maturidade: "Em Uso (Plataforma Core)" },
-            { nome: "API GPT (OpenAI)", desafio: "Automação de processos", descricao: "Integra o poder dos grandes modelos de linguagem (LLMs) a sistemas internos.", maturidade: "Em Uso (Projetos Piloto e Integração)" },
-            { nome: "GitHub Copilot", desafio: "Automação de processos", descricao: "Assistente de codificação de IA que utiliza LLMs para sugerir código em tempo real.", maturidade: "Em Uso (Adoção por Desenvolvedores)" },
-            { nome: "Copilot Studio", desafio: "Atendimento ao cliente", descricao: "Ferramenta low-code para criar e personalizar copilotos e chatbots corporativos.", maturidade: "Em Desenvolvimento (Criação de Agentes)" },
-            { nome: "TheoGPT", desafio: "Atendimento ao cliente", descricao: "Assistente virtual interno baseado em Azure/OpenAI para colaboradores.", maturidade: "Em Uso (Adoção Interna)" },
-            { nome: "Perplexity.AI", desafio: "Busca e geração de informações", descricao: "Plataforma de busca que utiliza IA generativa para fornecer respostas diretas com fontes.", maturidade: "Em Prospecção (Estudo de Caso)" },
-            { nome: "Vitrine de Modelos", desafio: "Análise preditiva", descricao: "Repositório centralizado para catálogo de modelos de Machine Learning (ML).", maturidade: "Em Uso (Plataforma Core)" },
-            { nome: "Copilot Chat", desafio: "Atendimento ao cliente", descricao: "Chat integrado ao ecossistema de produtividade para resumos e criação de conteúdo.", maturidade: "Em Uso (Disponível para Colaboradores)" },
-            { nome: "Copilot 365", desafio: "Automação de processos", descricao: "IA generativa integrada ao Word, Excel, PowerPoint e Teams.", maturidade: "Em Uso (Disponível para Colaboradores)" },
-            { nome: "Teams Premium", desafio: "Atendimento ao cliente", descricao: "Recursos de IA para reuniões, como resumos inteligentes e tradução.", maturidade: "Em Uso (Adoção em Reuniões)" },
-            { nome: "API do OCR", desafio: "Automação de processos", descricao: "Extração de texto de imagens e documentos usando IA.", maturidade: "Em Uso (Processamento de Documentos)" },
-            { nome: "IA GEN na Base", desafio: "Busca e geração de informações", descricao: "RAG em repositório interno de documentos para respostas precisas.", maturidade: "Em Desenvolvimento (MVP Interno)" },
-            { nome: "Portal Rag", desafio: "Busca e geração de informações", descricao: "Plataforma base para criação de soluções RAG locais.", maturidade: "Em Desenvolvimento (Plataforma Base)" },
-            { nome: "Fala Diana", desafio: "Atendimento ao cliente", descricao: "Consulta de dados financeiros em linguagem natural.", maturidade: "Em Uso (Adoção Interna)" },
-            { nome: "IA no Gupy", desafio: "Recrutamento e seleção", descricao: "Triagem e ranqueamento automático de candidatos com IA.", maturidade: "Em Uso (Triagem Automática)" },
-            { nome: "Power Automate", desafio: "Automação de processos", descricao: "RPA com recursos de IA para fluxos de trabalho inteligentes.", maturidade: "Em Uso (Fluxos de Trabalho e RPA)" },
-            { nome: "Canva IA", desafio: "Criação visual", descricao: "Geração de imagens e designs com IA para marketing.", maturidade: "Em Uso (Adoção por Marketing)" },
-            { nome: "Modelo Biribinha", desafio: "Crédito e risco", descricao: "Analista de crédito virtual para concessão automática.", maturidade: "Em Uso (Produção Plena)" },
-            { nome: "Crédito Fácil IA", desafio: "Crédito e risco", descricao: "Modelos estatísticos para definição de limites e valores.", maturidade: "Em Uso (Otimização Contínua)" },
-            { nome: "Propensão Consórcio", desafio: "Inteligência de mercado", descricao: "Modelos de ML para identificar clientes com propensão de compra.", maturidade: "Em Uso (Campanhas Ativas)" },
-            { nome: "MIA (Monest IA)", desafio: "Recuperação de crédito", descricao: "Automação e otimização da recuperação de crédito com IA.", maturidade: "Em Uso (Produção Plena)" }
+        // DADOS DO RADAR DE IA
+        const projectsData = [
+            // IA GENERATIVA & PRODUTIVIDADE
+            { id: "gen-01", nome: "Copilot Chat", desafio: "Generativa", descricao: "Assistente de propósito geral baseado em IA para web e Teams.", detalhes: "Acessível via navegador ou Microsoft Teams. Responde perguntas, gera textos para e-mails e comunicados, cria imagens, analisa transcrições de reuniões e resume documentos. Otimiza tempo e apoia comunicação." },
+            { id: "gen-02", nome: "Copilot 365", desafio: "Generativa", descricao: "IA integrada ao pacote Office (Word, Excel, PPT).", detalhes: "Habilita o assistente de IA nos produtos Office 365. Cria e revisa conteúdos no Word, analisa planilhas no Excel, gera apresentações no PowerPoint e resume reuniões, padronizando comunicações." },
+            { id: "gen-03", nome: "Teams Premium", desafio: "Generativa", descricao: "Recursos de IA para otimizar reuniões no Teams.", detalhes: "Incorpora resumos inteligentes, tagueamento de assuntos, legendas ao vivo com tradução simultânea e segurança avançada para reuniões e webinars." },
+            { id: "gen-04", nome: "Canva IA", desafio: "Generativa", descricao: "Funcionalidades de IA para criação visual e design.", detalhes: "Inclui Magic Write (textos), geração de imagens por IA, tradução automática, remoção de fundos e sugestões de estrutura para apresentações e vídeos." },
+            { id: "gen-05", nome: "TheoGPT", desafio: "Generativa", descricao: "Assistente virtual interno do Sicredi (Azure/OpenAI).", detalhes: "Ferramenta segura desenvolvida internamente. Atua como assistente conversacional respondendo perguntas sobre produtos, serviços e processos internos da cooperativa." },
+            { id: "gen-06", nome: "Perplexity.AI", desafio: "Generativa", descricao: "Busca inteligente com linguagem natural e fontes.", detalhes: "Plataforma de busca que combina linguagem natural com acesso à web em tempo real. Apresenta resumos concisos com citação de fontes. Ideal para pesquisas ágeis (atenção à segurança de dados)." },
+            { id: "gen-07", nome: "IA integrada ao Gupy", desafio: "Generativa", descricao: "Automação e triagem em recrutamento e seleção.", detalhes: "Analisa currículos, identifica aderência às vagas, realiza triagens automáticas e sugere perguntas para entrevistas, aprendendo com dados históricos para recomendar perfis." },
+
+            // DADOS & ANALYTICS
+            { id: "data-01", nome: "Databricks", desafio: "Dados", descricao: "Plataforma para Big Data e modelos preditivos.", detalhes: "Ferramenta poderosa para análise de grandes volumes de dados e criação de modelos de Machine Learning. Centraliza dados e acelera a tomada de decisão estratégica." },
+            { id: "data-02", nome: "Vitrine de Modelos", desafio: "Dados", descricao: "Compartilhamento de modelos de ML homologados.", detalhes: "Aplicação no Databricks que permite compartilhar modelos de machine learning entre CAS, Centrais e Cooperativas, facilitando governança e reuso." },
+            { id: "data-03", nome: "Fala Diana", desafio: "Dados", descricao: "Plataforma conversacional para dados financeiros (Hyperion).", detalhes: "Permite interagir com dados do planejamento financeiro via chat. Reduz tempo de pesquisa e aumenta autonomia de executivos na tomada de decisão." },
+
+            // SOLUÇÕES DE NEGÓCIO
+            { id: "neg-01", nome: "Modelo Biribinha", desafio: "Negocios", descricao: "Analista de Crédito Virtual 100% automático.", detalhes: "Realiza toda a jornada de análise e concessão de crédito automaticamente. Reduziu em 99% o tempo do fluxo e em 75% o tempo médio de avaliação." },
+            { id: "neg-02", nome: "Crédito Fácil com IA", desafio: "Negocios", descricao: "Definição de limites adequados ao perfil do associado.", detalhes: "Utiliza modelos estatísticos para definir valores e limites. Em casos práticos, reduziu inadimplência em 66% e aumentou concessão em 446%." },
+            { id: "neg-03", nome: "Propensão para Consórcios", desafio: "Negocios", descricao: "Identificação de leads qualificados para consórcio.", detalhes: "Aplica IA para identificar associados com maior probabilidade de contratação, aumentando a eficiência do contato comercial e assertividade das ofertas." },
+            { id: "neg-04", nome: "MIA (Monest IA)", desafio: "Negocios", descricao: "IA voltada para recuperação de crédito.", detalhes: "Analisa perfil de inadimplentes, sugere acordos personalizados e o melhor canal de contato, aumentando taxas de recuperação de crédito." },
+
+            // ENGENHARIA & AUTOMAÇÃO
+            { id: "eng-01", nome: "GitHub Copilot", desafio: "Engenharia", descricao: "Assistente de IA para desenvolvimento de software.", detalhes: "Sugere código, gera documentação e testes, auxiliando desenvolvedores. Aumenta produtividade e qualidade do código em sistemas financeiros." },
+            { id: "eng-02", nome: "API GPT (OpenAI)", desafio: "Engenharia", descricao: "Integração de IA generativa em sistemas locais.", detalhes: "Conecta sistemas internos à inteligência do modelo GPT. Permite automatizar tarefas, analisar documentos e criar chatbots personalizados via API." },
+            { id: "eng-03", nome: "API do OCR", desafio: "Engenharia", descricao: "Transformação de imagens em texto digital.", detalhes: "Automatiza a extração de dados de documentos escaneados. Acelera abertura de contas e análise de crédito, integrando dados aos sistemas." },
+            { id: "eng-04", nome: "Portal Rag", desafio: "Engenharia", descricao: "Solução para buscas em base de arquivos (RAG).", detalhes: "Permite criar repositórios de documentos e usar IA para gerar respostas baseadas neles. Acelera o desenvolvimento de IA em contextos locais." },
+            { id: "eng-05", nome: "Copilot Studio", desafio: "Engenharia", descricao: "Criação de agentes inteligentes (Low-code).", detalhes: "Ferramenta visual para criar chatbots e assistentes virtuais personalizados sem programação avançada. Conecta-se a dados corporativos." },
+            { id: "eng-06", nome: "Power Automate + IA", desafio: "Engenharia", descricao: "Automação de fluxos com recursos de IA.", detalhes: "Cria fluxos que reconhecem texto, analisam dados e extraem informações. Conecta-se ao Azure OpenAI para gerar textos e resumos em automações." },
+            { id: "eng-07", nome: "IA na Base de Conhecimento", desafio: "Engenharia", descricao: "Busca inteligente em normativos (ServiceNow).", detalhes: "Aplica IA aos documentos e normativos internos. Elabora resumos assertivos e reduz o tempo de resposta em buscas de suporte." }
         ];
 
-        // --- 2. MAPEAMENTO PARA AS 5 FATIAS (Necessário para a geometria do radar) ---
-        const dimensionMap = {
-            "Análise preditiva": "Dados e Decisão",
-            "Crédito e risco": "Dados e Decisão",
-            "Inteligência de mercado": "Dados e Decisão",
-            "Recuperação de crédito": "Dados e Decisão",
-            "Automação de processos": "Eficiência Operacional",
-            "Recrutamento e seleção": "Eficiência Operacional",
-            "Atendimento ao cliente": "Experiência do Cliente",
-            "Busca e geração de informações": "Gestão do Conhecimento",
-            "Criação visual": "Criatividade & Design"
-        };
-
-        // Mantendo cores distintas apenas para os PONTOS, mas a estrutura segue o padrão do arquivo original
-        const dimensionColors = {
-            "Dados e Decisão": "#3B82F6", // Azul
-            "Eficiência Operacional": "#10B981", // Verde
-            "Experiência do Cliente": "#F59E0B", // Laranja
-            "Gestão do Conhecimento": "#8B5CF6", // Roxo
-            "Criatividade & Design": "#EC4899"  // Rosa
-        };
-
-        // Prepara os dados
-        const originalRadarData = rawData.map(item => ({
-            ...item,
-            dimensaoAgrupada: dimensionMap[item.desafio] || "Outros"
-        }));
-
-        // Nomes das dimensões para os filtros e radar
-        const desafios = ["Todas", "Dados e Decisão", "Eficiência Operacional", "Experiência do Cliente", "Gestão do Conhecimento", "Criatividade & Design"];
-        const layers = [250, 200, 150]; // Raios das camadas
-
-        // --- FUNÇÕES MANTIDAS E ADAPTADAS DO ORIGINAL ---
-        
-        function getDesafioParams() {
-            const filteredDesafios = desafios.filter(d => d !== "Todas");
-            const total = filteredDesafios.length;
-            let params = {};
-            const angleSize = 180 / total;
-
-            filteredDesafios.forEach((d, i) => {
-                const start = 180 - angleSize * i;
-                const end = 180 - angleSize * (i + 1);
-                // Usa a cor específica para o ponto, mas o "tema" do site continua verde
-                params[d] = {
-                    start: start,
-                    end: end,
-                    color: dimensionColors[d] || "#3FA110" 
-                };
-            });
-            return params;
+        // LÓGICA DO MODAL
+        const modal = document.getElementById('project-modal');
+        function openModal(projectId) {
+            const project = projectsData.find(p => p.id === projectId);
+            if (!project) return;
+            document.getElementById('modal-title').textContent = project.nome;
+            document.getElementById('modal-description').textContent = project.descricao;
+            document.getElementById('modal-full-details').textContent = project.detalhes;
+            modal.classList.remove('hidden');
         }
+        function closeModal() { modal.classList.add('hidden'); }
 
-        // Função auxiliar para determinar o raio baseado no texto da maturidade
-        function getRadiusForMaturity(maturidade) {
-            const m = maturidade.toLowerCase();
-            if (m.includes("prospecção") || m.includes("estudo")) return layers[0];
-            if (m.includes("desenvolvimento") || m.includes("mvp") || m.includes("piloto") || m.includes("criação")) return layers[1];
-            if (m.includes("uso") || m.includes("produção") || m.includes("disponível")) return layers[2];
-            return layers[1];
-        }
-
-        function distributePoints(data, desafioParams, filter="Todas") {
-            let points = [];
-            Object.keys(desafioParams).forEach(cat => {
-                if (filter !== "Todas" && filter !== cat) return;
-                
-                // Filtra pelos dados agrupados
-                const items = data.filter(d => d.dimensaoAgrupada === cat);
-                
-                const {start, end, color} = desafioParams[cat];
-                const angleStep = (start - end) / (items.length + 1);
-                
-                items.forEach((item, i) => {
-                    const angle = start - angleStep * (i + 1);
-                    const radius = getRadiusForMaturity(item.maturidade);
-
-                    const rad = Math.PI * angle / 180;
-                    const x = 350 + radius * Math.cos(rad);
-                    const y = 350 - radius * Math.sin(rad);
-                    points.push({...item, x, y, color, categoriaVisual: cat});
-                });
-            });
-            return points;
-        }
-
-        function renderFilters() {
-            const section = document.getElementById('filterSection');
-            section.innerHTML = ''; 
-            desafios.forEach((d, idx) => {
-                const btn = document.createElement('button');
-                btn.className = 'content-item' + (idx === 0 ? ' active' : '');
-                btn.setAttribute('data-filter', d);
-                btn.textContent = d;
-                section.appendChild(btn);
-            });
-        }
-
-        function renderRadarPoints(filter) {
-            const svg = document.getElementById('radarSVG');
-            Array.from(svg.querySelectorAll('.radar-point')).forEach(e => e.remove());
-            
-            const desafioParams = getDesafioParams();
-            const points = distributePoints(originalRadarData, desafioParams, filter);
-            
-            points.forEach((pt) => {
-                const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-                circle.setAttribute("cx", pt.x);
-                circle.setAttribute("cy", pt.y);
-                circle.setAttribute("r", 12); 
-                circle.setAttribute("fill", pt.color);
-                circle.setAttribute("opacity", "0.85");
-                circle.setAttribute("class", "radar-point");
-                circle.setAttribute("style", "cursor:pointer; transition: fill 0.2s, r 0.2s;");
-                
-                circle.addEventListener("mouseenter", function() {
-                    this.setAttribute("r", 16); 
-                    showTooltip(pt, this);
-                });
-                circle.addEventListener("mouseleave", function() {
-                    this.setAttribute("r", 12);
-                    hideTooltip();
-                });
-                
-                circle.onclick = function() {
-                    showSelectedCard(pt);
-                };
-                svg.appendChild(circle);
-            });
-        }
-
-        function showTooltip(pt, element) {
-            const tooltip = document.getElementById('tooltip');
-            tooltip.innerHTML = `<strong>${pt.nome}</strong><br><span style="color:#ffffff; font-size:0.8em">${pt.desafio}</span>`;
-            tooltip.style.display = 'block';
-
-            const rect = element.getBoundingClientRect();
-            tooltip.style.left = (rect.left + rect.width / 2 - tooltip.offsetWidth / 2) + 'px';
-            tooltip.style.top = (rect.top - tooltip.offsetHeight - 8) + 'px';
-        }
-        
-        function hideTooltip() {
-            const tooltip = document.getElementById('tooltip');
-            tooltip.style.display = 'none';
-        }
-
-        // Função de card com estilo original, adaptada para usar a cor da dimensão
-        function showSelectedCard(pt) {
-            const container = document.getElementById('selectedCardContainer');
-            
-            const cardStyle = `
-                background: #ffffff; 
-                border: 1px solid #e0e0e0;
-                box-shadow: 0 4px 16px rgba(0,0,0,0.1); 
-                border-left: 10px solid ${pt.color};
-            `;
-            const maturityStyle = `color: ${pt.color};`;
-
-            container.innerHTML = `
-                <div class="selected-card" style="${cardStyle}">
-                    <div class="card-title text-xl"><strong>${pt.nome}</strong></div>
-                    <div class="card-category text-sm font-light text-gray-600">${pt.desafio} <span class="mx-1">|</span> ${pt.dimensaoAgrupada}</div>
-                    <div class="card-desc">${pt.descricao}</div>
-                    <div class="card-maturity" style="${maturityStyle}">Maturidade: ${pt.maturidade}</div>
+        // RENDERIZAÇÃO
+        function renderProjects(projects, container) {
+            if (projects.length === 0) {
+                container.innerHTML = '<p class="text-gray-400 italic py-4 col-span-full text-center">Nenhum projeto encontrado.</p>';
+                return;
+            }
+            container.innerHTML = projects.map(p => `
+                <div class="bg-white p-5 rounded-lg border border-gray-200 hover:shadow-md transition-shadow duration-200 h-full flex flex-col">
+                    <h4 class="font-bold text-gray-800 mb-2 text-lg">${p.nome}</h4>
+                    <p class="text-sm text-gray-500 leading-relaxed mb-4 flex-grow line-clamp-3">${p.descricao}</p>
+                    <button onclick="openModal('${p.id}')" class="text-xs font-semibold text-gray-400 hover:text-[#3FA110] self-start border-b border-dotted border-gray-400 pb-0.5 transition-colors cursor-pointer">Ver detalhes</button>
                 </div>
-            `;
+            `).join('');
         }
 
-        function setupFilterEvents() {
-            document.querySelectorAll('.content-filter-section .content-item').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    document.querySelectorAll('.content-filter-section .content-item').forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    const filter = this.getAttribute('data-filter');
-                    
-                    document.getElementById('selectedCardContainer').innerHTML = '';
-                    renderRadarPoints(filter);
-                });
-            });
+        function filterProjects(searchTerm, dimensionName) {
+            const containers = document.querySelectorAll('.projects-container');
+            let targetContainer = null;
+            containers.forEach(c => { if(c.getAttribute('data-dimension') === dimensionName) targetContainer = c; });
+            if(!targetContainer) return;
+            const term = searchTerm.toLowerCase();
+            const filtered = projectsData.filter(p => p.desafio === dimensionName && (p.nome.toLowerCase().includes(term) || p.descricao.toLowerCase().includes(term)));
+            renderProjects(filtered, targetContainer);
         }
 
-        // Funções da Página Principal (Sidebar e Tabs)
+        // NAVEGAÇÃO
         const sidebar = document.getElementById('sidebar');
-        const mainContent = document.getElementById('main-content');
         const menuToggle = document.getElementById('menu-toggle');
         const menuItems = document.querySelectorAll('.menu-item');
-        const modal = document.getElementById('project-modal');
-        const closeModalButton = document.getElementById('close-modal');
 
         function switchContent(contentId) {
-            document.querySelectorAll('.content-section').forEach(section => {
-                section.classList.add('hidden');
-            });
+            document.querySelectorAll('.content-section').forEach(section => section.classList.add('hidden'));
             const activeSection = document.getElementById(`content-${contentId}`);
-            if (activeSection) {
-                activeSection.classList.remove('hidden');
-                
-                if (contentId === 'radar') {
-                    renderFilters();
-                    setupFilterEvents();
-                    renderRadarPoints('Todas');
-                }
-            }
+            if (activeSection) activeSection.classList.remove('hidden');
             menuItems.forEach(item => {
                 if (item.getAttribute('data-content-id') === contentId) {
-                    item.classList.add('bg-[#3FA110]', 'text-white', 'font-bold');
-                    item.classList.remove('text-gray-700', 'hover:bg-gray-100');
-                    item.setAttribute('aria-current', 'true');
+                    item.classList.add('bg-gray-100', 'text-[#3FA110]', 'font-bold');
+                    item.classList.remove('text-gray-700');
                 } else {
-                    item.classList.remove('bg-[#3FA110]', 'text-white', 'font-bold');
-                    item.classList.add('text-gray-700', 'hover:bg-gray-100');
-                    item.removeAttribute('aria-current');
+                    item.classList.remove('bg-gray-100', 'text-[#3FA110]', 'font-bold');
+                    item.classList.add('text-gray-700');
                 }
             });
         }
 
-        menuToggle.addEventListener('click', () => {
-            sidebar.classList.toggle('hidden');
-        });
-
+        menuToggle.addEventListener('click', () => sidebar.classList.toggle('hidden'));
         menuItems.forEach(item => {
             item.addEventListener('click', function(e) {
                 e.preventDefault();
-                const contentId = this.getAttribute('data-content-id');
-                switchContent(contentId);
-                
-                if (window.innerWidth < 1024) {
-                    sidebar.classList.add('hidden');
-                }
-                mainContent.scrollIntoView({ behavior: 'smooth' });
+                switchContent(this.getAttribute('data-content-id'));
+                if (window.innerWidth < 1024) sidebar.classList.add('hidden');
             });
         });
-        
-        closeModalButton.addEventListener('click', () => {
-            modal.classList.add('hidden');
-        });
 
-        window.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
-                modal.classList.add('hidden');
-            }
-        });
+        function switchInnerTab(dimensionPrefix, tabName) {
+            const container = document.getElementById(`content-${dimensionPrefix}`);
+            if(!container) return;
+            container.querySelectorAll('.inner-tab-content').forEach(c => c.classList.add('hidden'));
+            container.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            const target = document.getElementById(`${dimensionPrefix}-${tabName}`);
+            if (target) target.classList.remove('hidden');
+            if(event && event.target) event.target.classList.add('active');
+        }
 
         window.onload = function() {
-            const initialContentId = window.location.hash.substring(1) || 'intro';
-            switchContent(initialContentId);
-            
-            if (window.innerWidth >= 1024) {
-                sidebar.classList.add('sidebar-fixed');
-            }
-            
-            window.addEventListener('resize', () => {
-                const radarContainer = document.getElementById('content-radar');
-                if (radarContainer && !radarContainer.classList.contains('hidden')) {
-                    const activeFilter = document.querySelector('.content-filter-section .content-item.active');
-                    const filter = activeFilter ? activeFilter.getAttribute('data-filter') : 'Todas';
-                    renderRadarPoints(filter);
-                }
+            document.querySelectorAll('.projects-container').forEach(container => {
+                const dimName = container.getAttribute('data-dimension');
+                renderProjects(projectsData.filter(p => p.desafio === dimName), container);
             });
+            switchContent('intro');
+            if (window.innerWidth >= 1024) sidebar.classList.add('sidebar-fixed');
         };
     </script>
 </body>
 </html>
-
-
-
